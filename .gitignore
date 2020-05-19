@@ -1,4 +1,11 @@
-.DS_Store
+# Local setup
 .htaccess
+.DS_Store
+
+# Wordpress
 wp-config.php
 uploads
+
+# Create React App
+wp-content/themes/ehcstaffing/*
+!wp-content/themes/ehcstaffing/react-src
