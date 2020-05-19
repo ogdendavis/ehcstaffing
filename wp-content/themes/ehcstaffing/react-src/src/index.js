@@ -1,13 +1,26 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+import Single from './templates/Single';
+import Home from './templates/Home';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <BrowserRouter>
+    <Switch>
+      <Route path="/asdf" key="test">
+        <Single />
+      </Route>
+      <Route path="/what" key="what">
+        <div>OH NO</div>
+      </Route>
+      <Route path="/" key="home">
+        <Home />
+      </Route>
+    </Switch>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
