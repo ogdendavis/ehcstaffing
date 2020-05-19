@@ -3,12 +3,13 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@devloco\/react-scripts-wptheme": "^3.4.1-wp.1",
-        "@testing-library\/jest-dom": "^4.2.4",
-        "@testing-library\/react": "^9.3.2",
-        "@testing-library\/user-event": "^7.1.2",
+        "@devloco/react-scripts-wptheme": "^3.4.1-wp.1",
+        "@testing-library/jest-dom": "^4.2.4",
+        "@testing-library/react": "^9.3.2",
+        "@testing-library/user-event": "^7.1.2",
         "react": "^16.13.1",
-        "react-dom": "^16.13.1"
+        "react-dom": "^16.13.1",
+        "react-router-dom": "^5.2.0"
     },
     "scripts": {
         "crabuild": "react-scripts build",
@@ -35,6 +36,6 @@
             "last 1 safari version"
         ]
     },
-    "homepage": "\/ehcstaffing\/wp-content\/themes\/ehcstaffing",
-    "browserLaunchTo": "http:\/\/localhost\/ehcstaffing"
+    "homepage": "/ehcstaffing/wp-content/themes/ehcstaffing",
+    "browserLaunchTo": "http://localhost/ehcstaffing"
 }
