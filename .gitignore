@@ -1,6 +1,7 @@
 # Local setup
 .htaccess
 .DS_Store
+.prettierrc
 
 # Wordpress
 wp-config.php
