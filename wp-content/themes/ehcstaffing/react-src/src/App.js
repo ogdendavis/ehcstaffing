@@ -4,15 +4,18 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Single from './templates/Single';
 import Home from './templates/Home';
 
-function App() {
+const App = () => {
+  console.log(process.env);
+
+  const testPath = '/' + process.env.REACT_APP_HOME.split('/').pop();
+  const baseName =
+    testPath.includes('.') || testPath.length === 0 ? '/' : testPath;
+
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={baseName}>
       <Switch>
         <Route path="/asdf" key="test">
           <Single />
-        </Route>
-        <Route path="/what" key="what">
-          <div>OH NO</div>
         </Route>
         <Route path="/" key="home">
           <Home />
@@ -20,6 +23,6 @@ function App() {
       </Switch>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
