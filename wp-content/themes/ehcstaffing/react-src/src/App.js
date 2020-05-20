@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
 import Home from './templates/Home';
 import About from './templates/About';
@@ -37,13 +37,12 @@ const App = () => {
         <Route path="/jobs" key="job_archive_route">
           <JobArchive />
         </Route>
-        <Route path="/404" key="404_route">
-          <FourOhFour />
-        </Route>
         <Route exact path="/" key="home">
           <Home />
         </Route>
-        <Redirect to="/404" />
+        <Route key="404_route">
+          <FourOhFour />
+        </Route>
       </Switch>
     </BrowserRouter>
   );
