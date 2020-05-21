@@ -2,7 +2,6 @@
 /*
  * Declare custom post type for jobs, create a custom meta box for that post
  * type, add fields to the meta box, and save those fields on post save.
- * TODO: hide unneeded fields on edit page
  * TODO: display relevant data in back-end Jobs listing page
  */
 
@@ -20,6 +19,8 @@ if (!function_exists('ehc_custom_post_types')) {
             'public' => true,
             'has_archive' => true,
             'menu_icon' => 'dashicons-businessman',
+            'supports' => [''],
+            'rewrite' => ['slug' => 'jobs'],
         ]);
     }
     add_action('init', 'ehc_custom_post_types');
