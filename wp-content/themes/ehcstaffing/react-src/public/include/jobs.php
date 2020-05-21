@@ -128,7 +128,6 @@ if (!function_exists('ehc_add_job_columns')) {
     // Add the columns to the list page
     function ehc_add_job_columns($columns)
     {
-        error_log('columns' . implode(' --- ', $columns));
         // We're not using any of the original columns, so start from scratch
         $new_columns = [
             'cb' => __('<input type="checkbox" />'),
