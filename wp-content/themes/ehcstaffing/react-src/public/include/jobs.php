@@ -50,6 +50,7 @@ if (!function_exists('ehc_add_job_meta')) {
         wp_nonce_field(basename(__FILE__), 'ehc_job_info_nonce');
 
         // Get existing values. If none exist, will return empty string
+        $saved_sourceid = get_post_meta($post->ID, '_job_sourceid', true);
         $saved_city = get_post_meta($post->ID, '_job_city', true);
         $saved_state = get_post_meta($post->ID, '_job_state', true);
         $saved_startdate = get_post_meta($post->ID, '_job_startdate', true);
@@ -62,6 +63,7 @@ if (!function_exists('ehc_add_job_meta')) {
         // HTML output below
         ?>
           <div class="ehc_job_info">
+            Source ID: <input type="text" name="sourceid" value="<?php echo $saved_sourceid; ?>" />
             City: <input type="text" name="city" value="<?php echo $saved_city; ?>" />
             State: <input type="text" name="state" value="<?php echo $saved_state; ?>" />
             Start Date: <input type="date" name="date" value="<?php echo $saved_startdate; ?>" />
@@ -96,6 +98,7 @@ if (!function_exists('ehc_add_job_meta')) {
         // Now do the saving!
         // For each value, check if it's set. If so, use update_post_meta to save it!
         $fields = [
+            'sourceid',
             'city',
             'state',
             'date',
@@ -117,4 +120,25 @@ if (!function_exists('ehc_add_job_meta')) {
         }
     }
     add_action('save_post_ehc_job', 'save_ehc_job_info');
+}
+
+/*
+ * Change post columns on job post list page
+ */
+if (!function_exists('ehc_job_columns')) {
+    function ehc_job_columns($columns)
+    {
+        error_log('columns' . implode(' --- ', $columns));
+        // We're not using any of the original columns, so start from scratch
+        $new_columns = [
+            'cb' => __('<input type="checkbox" />'),
+            'id' => __('ID'),
+            'facility' => __('Facility'),
+            'city' => __('City'),
+            'specialty' => __('Specialty'),
+            'jobstart' => __('Job Start'),
+        ];
+        return $new_columns;
+    }
+    add_filter('manage_ehc_job_posts_columns', 'ehc_job_columns');
 }
