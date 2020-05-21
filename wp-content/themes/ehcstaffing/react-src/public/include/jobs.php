@@ -2,7 +2,6 @@
 /*
  * Declare custom post type for jobs, create a custom meta box for that post
  * type, add fields to the meta box, and save those fields on post save.
- * TODO: display relevant data in back-end Jobs listing page
  */
 
 /*
@@ -66,7 +65,7 @@ if (!function_exists('ehc_add_job_meta')) {
             Source ID: <input type="text" name="sourceid" value="<?php echo $saved_sourceid; ?>" />
             City: <input type="text" name="city" value="<?php echo $saved_city; ?>" />
             State: <input type="text" name="state" value="<?php echo $saved_state; ?>" />
-            Start Date: <input type="date" name="date" value="<?php echo $saved_startdate; ?>" />
+            Start Date: <input type="date" name="startdate" value="<?php echo $saved_startdate; ?>" />
             Duration: <input type="text" name="duration" value="<?php echo $saved_duration; ?>" />
             Specialty: <input type="text" name="specialty" value="<?php echo $saved_specialty; ?>" />
             Unit: <input type="text" name="unit" value="<?php echo $saved_unit; ?>" />
@@ -101,7 +100,7 @@ if (!function_exists('ehc_add_job_meta')) {
             'sourceid',
             'city',
             'state',
-            'date',
+            'startdate',
             'duration',
             'specialty',
             'unit',
@@ -125,20 +124,46 @@ if (!function_exists('ehc_add_job_meta')) {
 /*
  * Change post columns on job post list page
  */
-if (!function_exists('ehc_job_columns')) {
-    function ehc_job_columns($columns)
+if (!function_exists('ehc_add_job_columns')) {
+    // Add the columns to the list page
+    function ehc_add_job_columns($columns)
     {
         error_log('columns' . implode(' --- ', $columns));
         // We're not using any of the original columns, so start from scratch
         $new_columns = [
             'cb' => __('<input type="checkbox" />'),
-            'id' => __('ID'),
-            'facility' => __('Facility'),
+            'sourceid' => __('Source ID'),
+            'localid' => __('Local ID'),
             'city' => __('City'),
             'specialty' => __('Specialty'),
             'jobstart' => __('Job Start'),
         ];
         return $new_columns;
     }
-    add_filter('manage_ehc_job_posts_columns', 'ehc_job_columns');
+    // Note that this hook ends in plural 'columns'
+    add_filter('manage_ehc_job_posts_columns', 'ehc_add_job_columns');
+
+    // Populate the columns with data
+    function ehc_fill_job_columns($column, $post_id)
+    {
+        if ($column === 'sourceid') {
+            echo get_post_meta($post_id, '_job_sourceid', true);
+        } elseif ($column === 'localid') {
+            echo $post_id;
+        } elseif ($column === 'city') {
+            echo get_post_meta($post_id, '_job_city', true);
+        } elseif ($column === 'specialty') {
+            echo get_post_meta($post_id, '_job_specialty', true);
+        } elseif ($column === 'jobstart') {
+            $startdate = get_post_meta($post_id, '_job_startdate', true);
+            echo $startdate;
+        }
+    }
+    // Note that this hook ends in singular 'column'
+    add_action(
+        'manage_ehc_job_posts_custom_column',
+        'ehc_fill_job_columns',
+        10,
+        2
+    );
 }
