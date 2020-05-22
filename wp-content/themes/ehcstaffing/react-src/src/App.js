@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+// Page templates
 import Home from './templates/Home';
 import About from './templates/About';
 import BlogArchive from './templates/BlogArchive';
@@ -10,6 +11,9 @@ import JobArchive from './templates/JobArchive';
 import JobSingle from './templates/JobSingle';
 import FourOhFour from './templates/404';
 
+// Components
+import Header from './components/Header';
+
 const App = () => {
   const testPath = '/' + process.env.REACT_APP_HOME.split('/').pop();
   const baseName =
@@ -17,6 +21,7 @@ const App = () => {
 
   return (
     <BrowserRouter basename={baseName}>
+      <Header />
       <Switch>
         {/* Remember that routes should go from most to least specific */}
         <Route path="/about" key="about_route">
