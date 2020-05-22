@@ -12,6 +12,7 @@ const SiteHeader = styled.header`
   align-items: center;
   border-bottom: 1px solid ${props => props.theme.primaryColor};
   font-family: ${props => props.theme.headingFontFamily};
+  background: ${props => props.theme.bgColor};
 `;
 
 const LogoContainer = styled.div`

@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
 ${normalize}
 ${fonts}
 body {
+  color: ${props => props.theme.textColor};
   font-family: ${props => props.theme.bodyFontFamily};
   font-weight: 300;
 }
@@ -19,8 +20,11 @@ body {
 const themeStyles = {
   primaryColor: `#6bb2d0`,
   secondaryColor: `#67b49f`,
+  bgColor: `#fff`,
+  textColor: `#3a3a3a`,
   headingFontFamily: `Montserrat, Arial, sans-serif`,
   bodyFontFamily: `Roboto, Arial, sans-serif`,
+  footerHeight: `300px`,
 };
 
 const Theme = ({ children }) => {
