@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
 import Layout from './components/Layout';
+import Theme from './components/Theme';
 
 const App = () => {
   const testPath = '/' + process.env.REACT_APP_HOME.split('/').pop();
@@ -10,7 +11,9 @@ const App = () => {
 
   return (
     <BrowserRouter basename={baseName}>
-      <Layout />
+      <Theme>
+        <Layout />
+      </Theme>
     </BrowserRouter>
   );
 };

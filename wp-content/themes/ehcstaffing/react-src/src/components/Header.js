@@ -10,7 +10,8 @@ const SiteHeader = styled.header`
   flex-flow: row nowrap;
   justify-content: space-around;
   align-items: center;
-  border-bottom: 1px solid blue;
+  border-bottom: 1px solid ${props => props.theme.primaryColor};
+  font-family: ${props => props.theme.headingFontFamily};
 `;
 
 const LogoContainer = styled.div`
@@ -22,18 +23,40 @@ const LogoContainer = styled.div`
 `;
 
 const HeaderNav = styled.nav`
-  background: gray;
+  a:not(.emphasis)::before {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    width: 0px;
+    height: 1px;
+    margin: 1px 0 0;
+    transition: all 0.4s ease-in-out;
+    opacity: 0;
+    background-color: ${props => props.theme.primaryColor};
+  }
+  a:not(.emphasis):hover::before {
+    width: 100%;
+    opacity: 1;
+    left: 0;
+  }
 `;
 
 const HeaderLink = styled(Link)`
-  color: blue;
-  text-decoration: none;
+  position: relative;
   margin-right: 1rem;
+  color: ${props => props.theme.primaryColor};
+  font-weight: 500;
+  text-decoration: none;
 
   &.emphasis {
-    background: red;
+    background: ${props => props.theme.secondaryColor};
+    color: white;
     padding: 0.5rem 1rem;
     border-radius: 100px;
+    transition: all 0.4s ease-in-out;
+  }
+  &.emphasis:hover {
+    background: ${props => props.theme.primaryColor};
   }
 `;
 
