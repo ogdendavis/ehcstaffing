@@ -1,0 +1,19 @@
+{
+  "files": {
+    "static/js/0.chunk.js": "/ehcstaffing/wp-content/themes/ehcstaffing/static/js/0.chunk.js",
+    "static/js/0.chunk.js.map": "/ehcstaffing/wp-content/themes/ehcstaffing/static/js/0.chunk.js.map",
+    "main.css": "/ehcstaffing/wp-content/themes/ehcstaffing/static/css/main.chunk.css",
+    "main.js": "/ehcstaffing/wp-content/themes/ehcstaffing/static/js/main.chunk.js",
+    "main.css.map": "/ehcstaffing/wp-content/themes/ehcstaffing/static/css/main.chunk.css.map",
+    "main.js.map": "/ehcstaffing/wp-content/themes/ehcstaffing/static/js/main.chunk.js.map",
+    "runtime-main.js": "/ehcstaffing/wp-content/themes/ehcstaffing/static/js/bundle.js",
+    "runtime-main.js.map": "/ehcstaffing/wp-content/themes/ehcstaffing/static/js/bundle.js.map",
+    "index.php": "/ehcstaffing/wp-content/themes/ehcstaffing/index.php"
+  },
+  "entrypoints": [
+    "static/js/bundle.js",
+    "static/js/0.chunk.js",
+    "static/css/main.chunk.css",
+    "static/js/main.chunk.js"
+  ]
+}

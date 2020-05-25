@@ -8,5 +8,5 @@ wp-config.php
 uploads
 
 # Create React App
-wp-content/themes/ehcstaffing/*
-!wp-content/themes/ehcstaffing/react-src
+wp-content/themes/nurseteam/*
+!wp-content/themes/nurseteam/react-src
