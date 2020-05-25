@@ -18,8 +18,8 @@ body {
 
 // Theme info for site-wide use
 const themeStyles = {
-  primaryColor: `#6bb2d0`,
-  secondaryColor: `#67b49f`,
+  primaryColor: `#439cd2`,
+  secondaryColor: `#1bce73`,
   bgColor: `#fff`,
   textColor: `#3a3a3a`,
   headingFontFamily: `Montserrat, Arial, sans-serif`,

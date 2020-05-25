@@ -9,7 +9,7 @@ const SiteFooter = styled.footer`
   height: ${props => props.theme.footerHeight};
   box-sizing: border-box;
   padding: 2rem;
-  background: ${props => props.theme.secondaryColor};
+  background: ${props => props.theme.primaryColor};
   color: ${props => props.theme.bgColor};
 `;
 
