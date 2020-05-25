@@ -18,7 +18,7 @@ body {
 
 // Theme info for site-wide use
 const themeStyles = {
-  primaryColor: `#439cd2`,
+  primaryColor: `#2d69a5`,
   secondaryColor: `#1bce73`,
   bgColor: `#fff`,
   textColor: `#3a3a3a`,
