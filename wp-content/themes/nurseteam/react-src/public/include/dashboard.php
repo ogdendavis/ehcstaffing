@@ -18,8 +18,7 @@ if (!function_exists('ehc_remove_dashboard_widgets')) {
             remove_meta_box('dashboard_plugins', 'dashboard', 'normal');
             remove_meta_box('dashboard_primary', 'dashboard', 'normal');
             remove_meta_box('dashboard_secondary', 'dashboard', 'normal');
-            // Leaving in quick draft, at least for now
-            // remove_meta_box('dashboard_quick_press', 'dashboard', 'side');
+            remove_meta_box('dashboard_quick_press', 'dashboard', 'side');
             remove_meta_box('dashboard_recent_drafts', 'dashboard', 'side');
             remove_meta_box('dashboard_recent_comments', 'dashboard', 'normal');
             remove_meta_box('dashboard_right_now', 'dashboard', 'normal');
@@ -58,16 +57,28 @@ if (!function_exists('ehc_add_dashboard_widgets')) {
         <form class="add_job_widget" action="<?php echo esc_url(
             admin_url('admin-post.php')
         ); ?>" method="POST">
-          Source ID: <input type="text" name="sourceid" value="" /><br />
-          City: <input type="text" name="city" value="" /><br />
-          State: <input type="text" name="state" value="" /><br />
-          Start Date: <input type="date" name="startdate" value="" /><br />
-          Duration: <input type="text" name="duration" value="" /><br />
-          Specialty: <input type="text" name="specialty" value="" /><br />
-          Unit: <input type="text" name="unit" value="" /><br />
-          Shift: <input type="text" name="shift" value="" /><br />
-          Pay Info:<br /><textarea name="pay"></textarea><br />
-          Description:<br /><textarea name="description"></textarea><br />
+          <style>
+            .add_job_widget label:not(.textarealabel) {
+              display: inline-block;
+              min-width: 5rem;
+              margin-bottom: 1rem;
+            }
+            .add_job_widget textarea {
+              width: 100%;
+              margin-bottom: 1rem;
+              min-height: 5rem;
+            }
+          </style>
+          <label for="sourceid">Source ID:</label><input type="text" name="sourceid" id="sourceid" value="" /><br />
+          <label for="city">City:</label><input type="text" name="city" id="city" value="" /><br />
+          <label for="state">State:</label><input type="text" name="state" id="state" value="" /><br />
+          <label for="startdate">Start Date:</label><input type="date" name="startdate" id="startdate" value="" /><br />
+          <label for="duration">Duration:</label><input type="text" name="duration" id="duration" value="" /><br />
+          <label for="specialty">Specialty:</label><input type="text" name="specialty" id="specialty" value="" /><br />
+          <label for="unit">Unit:</label><input type="text" name="unit" id="unit" value="" /><br />
+          <label for="shift">Shift:</label><input type="text" name="shift" id="shift" value="" /><br />
+          <label class="textarealabel" for="pay">Pay Info:</label><br /><textarea name="pay" id="pay"></textarea><br />
+          <label class="textarealabel" for="description">Description:</label><br /><textarea name="description" id="description"></textarea><br />
           <input type="hidden" name="action" value="dashboard_addjob">
           <input class="button button-primary" type="submit" name="delete-jobs" value="Add Job" />
         </form>
