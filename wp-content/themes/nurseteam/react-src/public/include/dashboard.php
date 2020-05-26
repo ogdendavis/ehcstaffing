@@ -53,8 +53,11 @@ if (!function_exists('ehc_add_dashboard_widgets')) {
     // TODO: Make these actually do something! They're just dumb HTML, right now
     function ehc_build_add_job_widget()
     {
+        // Action of form submission handled by ehc_add_job_from_dashboard function
         ?>
-        <div class="add_job_widget">
+        <form class="add_job_widget" action="<?php echo esc_url(
+            admin_url('admin-post.php')
+        ); ?>" method="POST">
           Source ID: <input type="text" name="sourceid" value="" /><br />
           City: <input type="text" name="city" value="" /><br />
           State: <input type="text" name="state" value="" /><br />
@@ -65,8 +68,9 @@ if (!function_exists('ehc_add_dashboard_widgets')) {
           Shift: <input type="text" name="shift" value="" /><br />
           Pay Info:<br /><textarea name="pay"></textarea><br />
           Description:<br /><textarea name="description"></textarea><br />
+          <input type="hidden" name="action" value="dashboard_addjob">
           <input class="button button-primary" type="submit" name="delete-jobs" value="Add Job" />
-        </div>
+        </form>
         <?php
     }
     function ehc_build_delete_job_widget()
@@ -94,4 +98,37 @@ if (!function_exists('ehc_add_dashboard_widgets')) {
         echo '</table><br />';
         echo '<input class="button button-primary" type="submit" name="delete-jobs" value="Delete selected" />';
     }
+}
+
+/*
+ * Handlers for form submission of dashboard widgets
+ */
+if (!function_exists('ehc_add_job_from_dashboard')) {
+    function ehc_add_job_from_dashboard()
+    {
+        // Construct args for wp_insert_post from form contents
+        $args = [
+            'ID' => 0, // 0 just means assign it the next ID
+            'post_type' => 'ehc_job',
+            'post_status' => 'publish',
+            'meta_input' => [
+                '_job_sourceid' => $_REQUEST['sourceid'] ?: '',
+                '_job_city' => $_REQUEST['city'] ?: '',
+                '_job_state' => $_REQUEST['state'] ?: '',
+                '_job_startdate' => $_REQUEST['startdate'] ?: '',
+                '_job_duration' => $_REQUEST['duration'] ?: '',
+                '_job_specialty' => $_REQUEST['specialty'] ?: '',
+                '_job_unit' => $_REQUEST['unit'] ?: '',
+                '_job_shift' => $_REQUEST['shift'] ?: '',
+                '_job_pay' => $_REQUEST['pay'] ?: '',
+                '_job_description' => $_REQUEST['description'] ?: '',
+            ],
+        ];
+        // Make the new post!
+        wp_insert_post($args);
+        // Redirect to admin page (basically just a reload)
+        wp_redirect($_SERVER['HTTP_REFERER']);
+        die('Done!');
+    }
+    add_action('admin_post_dashboard_addjob', 'ehc_add_job_from_dashboard');
 }
