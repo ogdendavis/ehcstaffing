@@ -78,25 +78,50 @@ if (!function_exists('ehc_add_dashboard_widgets')) {
         // First, we need to get all the jobs
         $args = [
             'post_type' => 'ehc_job',
+            'numberposts' => -1,
         ];
         $jobs = get_posts($args);
-        // Styles for the table
-        echo '<style>table.deleteJobs{border-collapse:collapse;width:100%;}table.deleteJobs th,table.deleteJobs td{border-bottom:1px solid #444;padding:.2rem .5rem .3rem;}table.deleteJobs th{text-align:left;}</style>';
-        // And now the table itself
-        echo '<table class="deleteJobs"><tr><th></th><th>Source ID</th><th>City</th><th>Specialty</th></tr>';
-        foreach ($jobs as $job):
-            // Meta is where the data we want live
+        // Form to handle submission
+        ?>
+        <form class="delete_job_widget" action="<?php echo esc_url(
+            admin_url('admin-post.php')
+        ); ?>" method="POST">
+        <style>
+          table.deleteJobs {
+            border-collapse:collapse;
+            width:100%;
+          }
+          table.deleteJobs th, table.deleteJobs td {
+            border-bottom: 1px solid #444;
+            padding:.2rem .5rem .3rem;
+          }
+          table.deleteJobs th {
+            text-align:left;
+          }
+        </style>
+        <input class="button button-primary" type="submit" name="delete-jobs" value="Delete selected" />
+        <table class="deleteJobs">
+          <tr>
+            <th></th>
+            <th>Source ID</th>
+            <th>City</th>
+            <th>Specialty</th>
+          </tr>
+        <?php foreach ($jobs as $job):
             $meta = get_post_meta($job->ID); ?>
-            <tr>
-              <td><input type="checkbox" /></td>
-              <td><?php echo $meta['_job_sourceid'][0]; ?></td>
-              <td><?php echo $meta['_job_city'][0]; ?></td>
-              <td><?php echo $meta['_job_specialty'][0]; ?></td>
-            </tr>
+                <tr>
+                  <td><input type="checkbox" name="selectedIDs[]" value="<?php echo $job->ID; ?>"/></td>
+                  <td><?php echo $meta['_job_sourceid'][0]; ?></td>
+                  <td><?php echo $meta['_job_city'][0]; ?></td>
+                  <td><?php echo $meta['_job_specialty'][0]; ?></td>
+                </tr>
         <?php
-        endforeach;
-        echo '</table><br />';
-        echo '<input class="button button-primary" type="submit" name="delete-jobs" value="Delete selected" />';
+        endforeach; ?>
+        </table><br />
+        <input type="hidden" name="action" value="dashboard_deletejob">
+        <input class="button button-primary" type="submit" name="delete-jobs" value="Delete selected" />
+      </form>
+      <?php
     }
 }
 
@@ -128,7 +153,28 @@ if (!function_exists('ehc_add_job_from_dashboard')) {
         wp_insert_post($args);
         // Redirect to admin page (basically just a reload)
         wp_redirect($_SERVER['HTTP_REFERER']);
-        die('Done!');
+        // Docs say to die at end of handler
+        die();
     }
     add_action('admin_post_dashboard_addjob', 'ehc_add_job_from_dashboard');
+}
+
+if (!function_exists('ehc_delete_job_from_dashboard')) {
+    function ehc_delete_job_from_dashboard()
+    {
+        $testString = '';
+        foreach ($_REQUEST['selectedIDs'] as $localId) {
+            // Delete all selected posts by their local IDs
+            // Will actually just move them to trash
+            wp_delete_post($localId);
+        }
+        // Refresh admin page
+        wp_redirect($_SERVER['HTTP_REFERER']);
+        // Docs say to die at end of handler
+        die();
+    }
+    add_action(
+        'admin_post_dashboard_deletejob',
+        'ehc_delete_job_from_dashboard'
+    );
 }
