@@ -13,6 +13,7 @@ const SiteHeader = styled.header`
   border-bottom: 1px solid ${props => props.theme.primaryColor};
   font-family: ${props => props.theme.headingFontFamily};
   background: ${props => props.theme.bgColor};
+  z-index: 10;
 `;
 
 const LogoContainer = styled.div`

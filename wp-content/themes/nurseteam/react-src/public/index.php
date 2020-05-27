@@ -1,6 +1,5 @@
 <?php
-  $TEMPLATE_PATH = parse_url(get_template_directory_uri(), PHP_URL_PATH);
-?>
+$TEMPLATE_PATH = parse_url(get_template_directory_uri(), PHP_URL_PATH); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +9,8 @@
     <meta name="theme-color" content="#000000" />
     <meta
       name="description"
-      content="Web site created using create-react-wptheme"
+      content="Travel nurse jobs"
     />
-    <link rel="apple-touch-icon" href="<?php echo $TEMPLATE_PATH; ?>/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
@@ -31,7 +29,7 @@
         work correctly both with client-side routing and a non-root public URL.
         Learn how to configure a non-root public URL by running `npm run wpbuild`.
     -->
-    <title>React WordPress Theme</title>
+    <title>Nurse Team</title>
 </head>
     <body>
     <noscript>

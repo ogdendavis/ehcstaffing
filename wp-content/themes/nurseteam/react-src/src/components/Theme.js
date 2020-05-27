@@ -25,6 +25,8 @@ const themeStyles = {
   headingFontFamily: `Montserrat, Arial, sans-serif`,
   bodyFontFamily: `Roboto, Arial, sans-serif`,
   footerHeight: `300px`,
+  contentWidth: `960px`,
+  transition: `all .5s cubic-bezier(.25,1.7,.35,.8)`,
 };
 
 const Theme = ({ children }) => {
