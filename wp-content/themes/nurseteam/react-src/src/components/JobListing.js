@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 
 import Opener from './Opener';
+import Button from './Button';
 
 const JobListingContainer = styled.article`
   border: ${props =>
@@ -48,22 +49,6 @@ const InsidePage = styled.div`
   }
 `;
 
-const ApplyButton = styled.button`
-  cursor: pointer;
-  background: ${props =>
-    props.open ? props.theme.secondaryColor : props.theme.primaryColor};
-  padding: 0.75rem 1.5rem;
-  color: #fff;
-  border-radius: 100px;
-  border: 0;
-  box-shadow: 0;
-  transition: ${props => props.theme.transition};
-
-  &:hover {
-    transform: scale(1.1);
-  }
-`;
-
 const JobListing = ({ job }) => {
   const [open, setOpen] = useState(false);
 
@@ -85,7 +70,7 @@ const JobListing = ({ job }) => {
           <p>{job.description}</p>
         </div>
       </InsidePage>
-      <ApplyButton open={open}>Apply for this job</ApplyButton>
+      <Button highlighted={open} text="Apply for this job" />
     </JobListingContainer>
   );
 };

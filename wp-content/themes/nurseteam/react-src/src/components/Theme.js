@@ -14,6 +14,9 @@ body {
   font-family: ${props => props.theme.bodyFontFamily};
   font-weight: 300;
 }
+h1, h2, h3, h4, h5, h6 {
+  font-family: ${props => props.theme.headingFontFamily};
+}
 `;
 
 // Theme info for site-wide use

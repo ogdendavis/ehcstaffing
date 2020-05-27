@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
+import ScrollRestoration from './components/ScrollRestoration';
 import Layout from './components/Layout';
 import Theme from './components/Theme';
 
@@ -11,6 +12,7 @@ const App = () => {
 
   return (
     <BrowserRouter basename={baseName}>
+      <ScrollRestoration />
       <Theme>
         <Layout />
       </Theme>
