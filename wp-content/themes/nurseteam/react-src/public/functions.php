@@ -8,5 +8,5 @@ require_once __DIR__ . '/include/dashboard.php';
 require_once __DIR__ . '/include/capabilities.php';
 // API init
 require_once __DIR__ . '/include/api_jobs.php';
-// Handle contact form submissions
-require_once __DIR__ . '/include/contact_form.php';
+// Handle form submissions
+require_once __DIR__ . '/include/forms.php';

@@ -49,7 +49,7 @@ const InsidePage = styled.div`
   }
 `;
 
-const JobListing = ({ job }) => {
+const JobListing = ({ job, handleButtonClick }) => {
   const [open, setOpen] = useState(false);
 
   return (
@@ -69,7 +69,12 @@ const JobListing = ({ job }) => {
           <p>{job.description}</p>
         </div>
       </InsidePage>
-      <Button highlighted={open} text="Apply for this job" />
+      <Button
+        highlighted={open}
+        text="Apply for this job"
+        handleClick={handleButtonClick}
+        value={job.sourceid}
+      />
     </JobListingContainer>
   );
 };

@@ -1,23 +1,29 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const ContactPageMain = styled.main`
-  max-width: ${props => props.theme.contentWidth};
-  padding: 0 2rem 2rem;
-  margin: 0 auto;
+const JobModal = styled.div`
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: linear-gradient(
+    rgba(125, 125, 125, 0.75),
+    rgba(125, 125, 125, 0.75)
+  );
+  z-index: 20;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
-const ContactForm = styled.form`
+const JobForm = styled.form`
   background: #f7f7f7;
-  padding: 1rem;
-  margin: 0 auto;
-  width: 50%;
-  min-width: 300px;
-  box-sizing: border-box;
+  padding: 2rem;
 `;
 
 // Styles copied from Button component
-const ContactSubmit = styled.input`
+const JobSubmit = styled.input`
   cursor: pointer;
   background: ${props =>
     props.highlighted ? props.theme.secondaryColor : props.theme.primaryColor};
@@ -33,17 +39,16 @@ const ContactSubmit = styled.input`
   }
 `;
 
-const Contact = props => {
+const JobAppModal = ({ jobs, selectedJob, toggleModal }) => {
+  const handleClick = ev => {
+    if (ev.target.id === 'jobModal') {
+      toggleModal();
+    }
+  };
+
   return (
-    <ContactPageMain>
-      <div>
-        <h1>Get a job!</h1>
-        <p>
-          Apply for a job, or sumbit your resume for consideration for future
-          travel nurse positions.
-        </p>
-      </div>
-      <ContactForm
+    <JobModal id="jobModal" onClick={handleClick}>
+      <JobForm
         action={process.env.REACT_APP_HOME + '/wp-admin/admin-post.php'}
         method="POST"
       >
@@ -60,12 +65,14 @@ const Contact = props => {
         <input name="phone" id="phone" type="tel" />
         <br />
         <label htmlFor="whichJob">Applying for:</label>
-        <select id="whichJob" name="whichJob">
-          <option value="">Please notify me of future jobs</option>
-          <option value="sourceid1">
-            Telemetry/Stepdown in Bar Harbor, ME
-          </option>
-          <option value="sourceid2">ER Observation RN in Winnebago, NE</option>
+        <select id="whichJob" name="whichJob" defaultValue={selectedJob}>
+          {jobs.map(job => {
+            return (
+              <option key={`${job.sourceid}option`} value={job.sourceid}>
+                {job.display_title}
+              </option>
+            );
+          })}
         </select>
         <label htmlFor="resume">Resume:</label>
         <input name="resume" id="resume" type="file" />
@@ -73,11 +80,11 @@ const Contact = props => {
         <label htmlFor="coverletter">Cover Letter:</label>
         <input name="coverletter" id="coverletter" type="file" />
         <br />
-        <input type="hidden" name="action" value="submit_contactform" />
-        <ContactSubmit type="submit" value="Submit" />
-      </ContactForm>
-    </ContactPageMain>
+        <input type="hidden" name="action" value="submit_jobapp" />
+        <JobSubmit type="submit" value="Submit" />
+      </JobForm>
+    </JobModal>
   );
 };
 
-export default Contact;
+export default JobAppModal;

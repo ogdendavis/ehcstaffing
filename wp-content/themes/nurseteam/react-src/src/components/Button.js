@@ -17,8 +17,16 @@ const ButtonContainer = styled.button`
   }
 `;
 
-const Button = ({ text, highlighted }) => {
-  return <ButtonContainer highlighted={highlighted}>{text}</ButtonContainer>;
+const Button = ({ text, highlighted, handleClick, value }) => {
+  return (
+    <ButtonContainer
+      highlighted={highlighted}
+      onClick={handleClick}
+      value={value}
+    >
+      {text}
+    </ButtonContainer>
+  );
 };
 
 export default Button;

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import JobListing from '../components/JobListing';
+import JobAppModal from '../components/JobAppModal';
 
 const JobPageMain = styled.main`
   max-width: ${props => props.theme.contentWidth};
@@ -13,6 +14,19 @@ const JobPageMain = styled.main`
 
 const JobArchive = props => {
   const [jobs, setJobs] = useState([]);
+  const [apply, setApply] = useState(false);
+  const [selectedJob, setSelectedJob] = useState('initial');
+
+  // Passed to modal to toggle visibility
+  const toggleApply = () => {
+    setApply(!apply);
+  };
+
+  // Passed to each job listing to toggle modal visibility and indicate the job whose 'Apply' button was clicked
+  const handleButtonClick = ev => {
+    setApply(!apply);
+    setSelectedJob(ev.target.value);
+  };
 
   useEffect(() => {
     async function getJobs() {
@@ -23,6 +37,15 @@ const JobArchive = props => {
     getJobs();
   }, []);
 
+  // Simplify job info into an array for the application modal
+  const jobsForModal = [];
+  for (const key in jobs) {
+    jobsForModal.push({
+      sourceid: jobs[key].sourceid,
+      display_title: jobs[key].display_title,
+    });
+  }
+
   return (
     <JobPageMain>
       <h1>Here are some jobs!</h1>
@@ -32,8 +55,21 @@ const JobArchive = props => {
         );
         job.startdate = startDate;
 
-        return <JobListing job={job} key={`${job.city}-${job.startdate}`} />;
+        return (
+          <JobListing
+            job={job}
+            key={`${job.city}-${job.startdate}`}
+            handleButtonClick={handleButtonClick}
+          />
+        );
       })}
+      {apply && (
+        <JobAppModal
+          selectedJob={selectedJob}
+          toggleModal={toggleApply}
+          jobs={jobsForModal}
+        />
+      )}
     </JobPageMain>
   );
 };
