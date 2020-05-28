@@ -22,7 +22,7 @@ h1, h2, h3, h4, h5, h6 {
 // Theme info for site-wide use
 const themeStyles = {
   primaryColor: `#2d69a5`,
-  secondaryColor: `#1bce73`,
+  secondaryColor: `#25aa7b`,
   bgColor: `#fff`,
   textColor: `#3a3a3a`,
   headingFontFamily: `Montserrat, Arial, sans-serif`,
