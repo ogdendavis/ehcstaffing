@@ -29,15 +29,19 @@ if (!function_exists('ehc_get_jobs')) {
             },
             ARRAY_FILTER_USE_KEY
         );
-        // No need to expose source id to the front end
-        unset($filtered['_job_sourceid']);
         // Simplify by making keys plain English and bringing the info up out
         // of the array it's currently hiding in
-        $simplified = [];
         foreach ($filtered as $k => $v) {
             $newkey = str_replace('_job_', '', $k);
             $simplified[$newkey] = $v[0];
         }
+        // Add title for consistent display in job listings and submission form
+        $simplified['display_title'] =
+            $simplified['specialty'] .
+            ' in ' .
+            $simplified['city'] .
+            ', ' .
+            $simplified['state'];
         return $simplified;
     }
     // Add endpoint

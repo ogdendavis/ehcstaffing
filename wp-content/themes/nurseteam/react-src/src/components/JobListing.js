@@ -56,10 +56,9 @@ const JobListing = ({ job }) => {
     <JobListingContainer open={open}>
       <FrontPage onClick={() => setOpen(!open)}>
         <div>
-          <p>{job.specialty} Nurse</p>
+          <p>{job.display_title}</p>
           <p>
-            {job.duration} in {job.city}, {job.state}, starting on{' '}
-            {job.startdate}.
+            {job.duration}, starting on {job.startdate}.
           </p>
         </div>
         <Opener open={open} />
