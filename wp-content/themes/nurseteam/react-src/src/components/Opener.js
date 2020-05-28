@@ -22,7 +22,7 @@ const OpenerContainer = styled.span`
     border-radius: 2px;
     &:after {
       content: '';
-      background-color: ${props => props.theme.secondaryColor};
+      background-color: ${props => props.theme.primaryColor};
       width: 40px;
       height: 10px;
       display: block;
@@ -46,7 +46,7 @@ const OpenerContainer = styled.span`
     border-radius: 2px;
     &:after {
       content: '';
-      background-color: ${props => props.theme.secondaryColor};
+      background-color: ${props => props.theme.primaryColor};
       width: 40px;
       height: 10px;
       display: block;
@@ -61,12 +61,12 @@ const OpenerContainer = styled.span`
     .left-bar:after {
     transform-origin: center center;
     transform: rotate(-70deg);
-    background-color: ${props => props.theme.primaryColor};
+    background-color: ${props => props.theme.secondaryColor};
   }
   .right-bar:after {
     transform-origin: center center;
     transform: rotate(70deg);
-    background-color: ${props => props.theme.primaryColor};
+    background-color: ${props => props.theme.secondaryColor};
   }
 `;
 
