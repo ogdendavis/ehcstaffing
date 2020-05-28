@@ -6,6 +6,7 @@ require_once __DIR__ . '/include/jobs.php';
 require_once __DIR__ . '/include/dashboard.php';
 // Remove add/delete page capability for editors
 require_once __DIR__ . '/include/capabilities.php';
-
-// API init!
+// API init
 require_once __DIR__ . '/include/api_jobs.php';
+// Handle contact form submissions
+require_once __DIR__ . '/include/contact_form.php';
