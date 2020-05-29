@@ -16,6 +16,12 @@ const JobArchive = props => {
   const [jobs, setJobs] = useState([]);
   const [apply, setApply] = useState(false);
   const [selectedJob, setSelectedJob] = useState('initial');
+  const [applicantInfo, setApplicantInfo] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    phone: '',
+  });
 
   // Passed to modal to toggle visibility
   const toggleApply = () => {
@@ -68,6 +74,9 @@ const JobArchive = props => {
           selectedJob={selectedJob}
           toggleModal={toggleApply}
           jobs={jobsForModal}
+          visible={apply}
+          info={applicantInfo}
+          setInfo={setApplicantInfo}
         />
       )}
     </JobPageMain>

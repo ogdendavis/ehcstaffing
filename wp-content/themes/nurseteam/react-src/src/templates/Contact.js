@@ -14,6 +14,16 @@ const ContactForm = styled.form`
   width: 50%;
   min-width: 300px;
   box-sizing: border-box;
+
+  textarea {
+    width: 100%;
+    min-height: 10rem;
+  }
+
+  span {
+    font-size: 0.8rem;
+    font-style: italic;
+  }
 `;
 
 // Styles copied from Button component
@@ -37,10 +47,10 @@ const Contact = props => {
   return (
     <ContactPageMain>
       <div>
-        <h1>Get a job!</h1>
+        <h1>Get In Touch</h1>
         <p>
-          Apply for a job, or sumbit your resume for consideration for future
-          travel nurse positions.
+          Have a question, or want us to keep you in mind for future travel
+          nurse openings? Let us know!
         </p>
       </div>
       <ContactForm
@@ -59,22 +69,22 @@ const Contact = props => {
         <label htmlFor="phone">Phone:</label>
         <input name="phone" id="phone" type="tel" />
         <br />
-        <label htmlFor="whichJob">Applying for:</label>
-        <select id="whichJob" name="whichJob">
-          <option value="">Please notify me of future jobs</option>
-          <option value="sourceid1">
-            Telemetry/Stepdown in Bar Harbor, ME
-          </option>
-          <option value="sourceid2">ER Observation RN in Winnebago, NE</option>
-        </select>
+        <label htmlFor="message">Message:</label>
+        <br />
+        <textarea name="message" id="message" />
+        <br />
         <label htmlFor="resume">Resume:</label>
+        <br />
         <input name="resume" id="resume" type="file" />
         <br />
-        <label htmlFor="coverletter">Cover Letter:</label>
-        <input name="coverletter" id="coverletter" type="file" />
+        <span>
+          (Only attach a resume if you wish to have it kept on file for future
+          openings)
+        </span>
         <br />
         <input type="hidden" name="action" value="submit_contactform" />
-        <ContactSubmit type="submit" value="Submit" />
+        <br />
+        <ContactSubmit type="submit" value="Send" />
       </ContactForm>
     </ContactPageMain>
   );

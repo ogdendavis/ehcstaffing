@@ -39,11 +39,23 @@ const JobSubmit = styled.input`
   }
 `;
 
-const JobAppModal = ({ jobs, selectedJob, toggleModal }) => {
+const JobAppModal = ({
+  jobs,
+  selectedJob,
+  toggleModal,
+  visible,
+  info,
+  setInfo,
+}) => {
   const handleClick = ev => {
     if (ev.target.id === 'jobModal') {
       toggleModal();
     }
+  };
+
+  const handleUpdateInfo = ev => {
+    ev.persist();
+    setInfo(info => ({ ...info, [ev.target.name]: ev.target.value }));
   };
 
   return (
@@ -53,16 +65,40 @@ const JobAppModal = ({ jobs, selectedJob, toggleModal }) => {
         method="POST"
       >
         <label htmlFor="firstname">First Name:</label>
-        <input name="firstname" id="firstname" />
+        <input
+          type="text"
+          name="firstname"
+          id="firstname"
+          value={info.firstname}
+          onChange={handleUpdateInfo}
+        />
         <br />
         <label htmlFor="lastname">Last Name:</label>
-        <input name="lastname" id="lastname" />
+        <input
+          type="text"
+          name="lastname"
+          id="lastname"
+          value={info.lastname}
+          onChange={handleUpdateInfo}
+        />
         <br />
         <label htmlFor="email">Email:</label>
-        <input name="email" id="email" type="email" />
+        <input
+          type="email"
+          name="email"
+          id="email"
+          value={info.email}
+          onChange={handleUpdateInfo}
+        />
         <br />
         <label htmlFor="phone">Phone:</label>
-        <input name="phone" id="phone" type="tel" />
+        <input
+          type="tel"
+          name="phone"
+          id="phone"
+          value={info.phone}
+          onChange={handleUpdateInfo}
+        />
         <br />
         <label htmlFor="whichJob">Applying for:</label>
         <select id="whichJob" name="whichJob" defaultValue={selectedJob}>
