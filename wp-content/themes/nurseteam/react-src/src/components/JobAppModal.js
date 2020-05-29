@@ -20,6 +20,36 @@ const JobModal = styled.div`
 const JobForm = styled.form`
   background: #f7f7f7;
   padding: 2rem;
+  position: relative;
+
+  h2 {
+    margin-top: 0;
+  }
+
+  label {
+    display: inline-block;
+    width: 8rem;
+    margin-bottom: 1rem;
+  }
+`;
+
+// X to indicate modal is closable
+const Closer = styled.div`
+  &:before {
+    content: '×';
+    position: absolute;
+    top: -3rem;
+    right: -1.75rem;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #f7f7f7;
+    cursor: pointer;
+    transition: color 0.25s ease;
+  }
+
+  &:hover:before {
+    color: ${props => props.theme.primaryColor};
+  }
 `;
 
 // Styles copied from Button component
@@ -48,7 +78,7 @@ const JobAppModal = ({
   setInfo,
 }) => {
   const handleClick = ev => {
-    if (ev.target.id === 'jobModal') {
+    if (ev.target.id === 'jobModal' || ev.target.id === 'closer') {
       toggleModal();
     }
   };
@@ -64,6 +94,8 @@ const JobAppModal = ({
         action={process.env.REACT_APP_HOME + '/wp-admin/admin-post.php'}
         method="POST"
       >
+        <Closer id="closer" />
+        <h2>Submit Your Application</h2>
         <label htmlFor="firstname">First Name:</label>
         <input
           type="text"
@@ -110,6 +142,7 @@ const JobAppModal = ({
             );
           })}
         </select>
+        <br />
         <label htmlFor="resume">Resume:</label>
         <input name="resume" id="resume" type="file" />
         <br />
