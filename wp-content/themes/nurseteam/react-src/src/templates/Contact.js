@@ -9,15 +9,33 @@ const ContactPageMain = styled.main`
 
 const ContactForm = styled.form`
   background: #f7f7f7;
-  padding: 1rem;
+  padding: 2rem;
   margin: 0 auto;
-  width: 50%;
+  width: 60%;
   min-width: 300px;
   box-sizing: border-box;
 
+  label {
+    display: inline-block;
+    width: 6rem;
+    margin-bottom: 0.5rem;
+  }
+
+  input {
+    margin-bottom: 1rem;
+  }
+
+  input[type='file'] {
+    margin-bottom: 0;
+  }
+
+  label[for='message'] {
+    vertical-align: top;
+  }
+
   textarea {
-    width: 100%;
     min-height: 10rem;
+    margin-bottom: 1.5rem;
   }
 
   span {
@@ -70,11 +88,9 @@ const Contact = props => {
         <input name="phone" id="phone" type="tel" />
         <br />
         <label htmlFor="message">Message:</label>
-        <br />
         <textarea name="message" id="message" />
         <br />
         <label htmlFor="resume">Resume:</label>
-        <br />
         <input name="resume" id="resume" type="file" />
         <br />
         <span>
