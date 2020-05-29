@@ -80,7 +80,7 @@ const Header = () => {
           Jobs
         </HeaderLink>
         <HeaderLink to="/about">About</HeaderLink>
-        <HeaderLink to="/blog">Blog</HeaderLink>
+        <HeaderLink to="/articles">Blog</HeaderLink>
         <HeaderLink to="/contact">Contact</HeaderLink>
       </HeaderNav>
     </SiteHeader>

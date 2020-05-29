@@ -34,10 +34,10 @@ const Layout = () => {
           <Route path="/about" key="about_route">
             <About />
           </Route>
-          <Route path="/blog/:id" key="blog_single_route">
+          <Route path="/articles/:id" key="blog_single_route">
             <BlogSingle />
           </Route>
-          <Route path="/blog" key="blog_archive_route">
+          <Route path="/articles" key="blog_archive_route">
             <BlogArchive />
           </Route>
           <Route path="/contact" key="contact_route">
