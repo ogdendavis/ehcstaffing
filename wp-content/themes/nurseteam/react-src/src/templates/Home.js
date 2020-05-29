@@ -5,29 +5,34 @@ import { Link } from 'react-router-dom';
 import Button from '../components/Button';
 
 const Hero = styled.div`
-  min-height: 50vh;
-  background: rgb(37, 51, 126);
+  min-height: 67vh;
   background: linear-gradient(
-    195deg,
-    rgba(37, 51, 126, 1) 0%,
-    rgba(67, 156, 210, 1) 60%,
-    rgba(27, 206, 115, 1) 100%
-  );
+      to right,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0.5)
+    ),
+    url(${process.env.PUBLIC_URL + '/assets/PROPOSEDhero1.png'}) left/cover
+      no-repeat;
+  position: relative;
 
   div {
-    color: white;
-    padding: 6rem;
+    color: ${props => props.theme.primaryColor};
+    text-shadow: 0px 0px 0.5rem #fff, 0 0 1rem #ddd;
+    padding: 0 5vw;
     text-align: right;
+    position: absolute;
+    top: 10%;
+    right: 0;
   }
 
   h1 {
     text-align: right;
-    font-size: 3rem;
+    font-size: 4rem;
     margin-bottom: 1rem;
   }
 
   span {
-    font-size: 1.1rem;
+    font-size: 1.25rem;
     font-weight: 300;
   }
 `;
@@ -37,11 +42,17 @@ const Section = styled.section`
   padding: 2rem 4rem;
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-around;
+  justify-content: center;
   align-items: center;
 
   div {
-    max-width: 50%;
+    width: 45%;
+    max-width: 600px;
+    margin: 0 1rem;
+  }
+
+  img {
+    width: 100%;
   }
 
   p {
@@ -72,16 +83,16 @@ const Home = props => {
         </div>
         <div>
           <img
-            src={process.env.PUBLIC_URL + '/assets/patient_care.png'}
-            alt="Nurse with patient"
+            src={process.env.PUBLIC_URL + '/assets/PROPOSEDhomepage1.png'}
+            alt="Group of nurses"
           />
         </div>
       </Section>
       <Section centered={true}>
         <div>
           <img
-            src={process.env.PUBLIC_URL + '/assets/doctor_nurse.png'}
-            alt="Nurse team"
+            src={process.env.PUBLIC_URL + '/assets/PROPOSEDhomepage2.png'}
+            alt="Nurse and doctor conferring"
           />
         </div>
         <div>
