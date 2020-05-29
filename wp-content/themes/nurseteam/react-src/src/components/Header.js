@@ -17,7 +17,8 @@ const SiteHeader = styled.header`
 `;
 
 const LogoContainer = styled.div`
-  max-width: 300px;
+  width: 500px;
+  max-width: 33vw;
 
   img {
     width: 100%;
@@ -69,7 +70,7 @@ const Header = () => {
         <Link to="/">
           <img
             src={process.env.PUBLIC_URL + '/assets/headerLogo.png'}
-            alt="Fake Logo"
+            alt="Nurse Team logo"
           />
         </Link>
       </LogoContainer>
