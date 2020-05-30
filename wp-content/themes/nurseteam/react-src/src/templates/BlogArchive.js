@@ -65,7 +65,7 @@ const BlogArchive = props => {
   useEffect(() => {
     async function getPosts() {
       await fetch(
-        `${process.env.REACT_APP_HOME}/wp-json/wp/v2/posts?page=${page}`
+        `${process.env.REACT_APP_HOME}/wp-json/wp/v2/posts?page=${page}&_fields=id,title,excerpt`
       )
         .then(res => {
           // Use WP-provided header to indicate the number of pages of blog posts we have
