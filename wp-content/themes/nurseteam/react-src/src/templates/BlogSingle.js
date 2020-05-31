@@ -28,13 +28,12 @@ const BlogSingle = props => {
 
   useEffect(() => {
     async function getPost() {
-      const path = `${process.env.REACT_APP_HOME}/wp-json/wp/v2/posts/${postID}`;
       await fetch(`${process.env.REACT_APP_HOME}/wp-json/wp/v2/posts/${postID}`)
         .then(res => res.json())
         .then(j => setPost(j));
     }
     getPost();
-  }, []);
+  }, [postID]);
 
   return (
     <PostPageMain>
