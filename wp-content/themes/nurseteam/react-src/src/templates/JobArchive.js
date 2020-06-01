@@ -2,7 +2,9 @@
 
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
+import JobSort from '../components/JobSort';
 import JobListing from '../components/JobListing';
 import JobAppModal from '../components/JobAppModal';
 
@@ -13,7 +15,7 @@ const JobPageMain = styled.main`
 `;
 
 const JobArchive = props => {
-  const [jobs, setJobs] = useState([]);
+  const [allJobs, setAllJobs] = useState([]);
   const [apply, setApply] = useState(false);
   const [selectedJob, setSelectedJob] = useState('initial');
   const [applicantInfo, setApplicantInfo] = useState({
@@ -38,24 +40,31 @@ const JobArchive = props => {
     async function getJobs() {
       await fetch(`${process.env.REACT_APP_HOME}/wp-json/ehcapi/v1/jobs`)
         .then(res => res.json())
-        .then(j => setJobs(j));
+        .then(j => setAllJobs(j));
     }
     getJobs();
   }, []);
 
   // Simplify job info into an array for the application modal
   const jobsForModal = [];
-  for (const key in jobs) {
+  for (const key in allJobs) {
     jobsForModal.push({
-      sourceid: jobs[key].sourceid,
-      display_title: jobs[key].display_title,
+      sourceid: allJobs[key].sourceid,
+      display_title: allJobs[key].display_title,
     });
   }
 
   return (
     <JobPageMain>
-      <h1>Here are some jobs!</h1>
-      {jobs.map(job => {
+      <h1>Travel Nurse Jobs</h1>
+      <p>
+        These listings are updated regularly. If you don't see an opportunity
+        that fits what you're looking for, you can{' '}
+        <Link to="/contact">send us your info</Link> to be considered for future
+        openings, and check this page regularly for new listings.
+      </p>
+      <JobSort jobs={allJobs} />
+      {allJobs.map(job => {
         const startDate = new Intl.DateTimeFormat('en-US').format(
           new Date(job.startdate)
         );

@@ -8,6 +8,7 @@ const OpenerContainer = styled.span`
   position: relative;
   cursor: pointer;
   border-radius: 4px;
+  display: inline-block;
 
   .left-bar {
     position: absolute;
@@ -20,7 +21,7 @@ const OpenerContainer = styled.span`
     transform: rotate(35deg);
     float: right;
     border-radius: 2px;
-    &:after {
+    &::after {
       content: '';
       background-color: ${props => props.theme.primaryColor};
       width: 40px;
@@ -44,7 +45,7 @@ const OpenerContainer = styled.span`
     transform: rotate(-35deg);
     float: right;
     border-radius: 2px;
-    &:after {
+    &::after {
       content: '';
       background-color: ${props => props.theme.primaryColor};
       width: 40px;
@@ -58,21 +59,21 @@ const OpenerContainer = styled.span`
   }
 
   &.open {
-    .left-bar:after {
+    .left-bar::after {
     transform-origin: center center;
     transform: rotate(-70deg);
     background-color: ${props => props.theme.secondaryColor};
   }
-  .right-bar:after {
+  .right-bar::after {
     transform-origin: center center;
     transform: rotate(70deg);
     background-color: ${props => props.theme.secondaryColor};
   }
 `;
 
-const Opener = ({ open }) => {
+const Opener = ({ open, addClass }) => {
   return (
-    <OpenerContainer className={open ? 'open' : ''}>
+    <OpenerContainer className={open ? `open ${addClass}` : addClass}>
       <span className="left-bar" />
       <span className="right-bar" />
     </OpenerContainer>
