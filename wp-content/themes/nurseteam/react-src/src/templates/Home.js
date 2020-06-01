@@ -102,7 +102,9 @@ const Home = props => {
             preferences and skill set? Upload your resume and preferences, and
             we'll reach out to you when there's an opportunity that fits.
           </p>
-          <Button text="Upload your info" />
+          <Link to="/contact">
+            <Button text="Upload your info" />
+          </Link>
         </div>
       </Section>
       <Section centered={true}>

@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
 // Get svgs
-import { ReactComponent as FaceIcon } from '../icons/icon-facebook-white.svg';
-import { ReactComponent as InstaIcon } from '../icons/icon-instagram-white.svg';
-import { ReactComponent as TwitIcon } from '../icons/icon-twitter-white.svg';
+import { ReactComponent as FaceIcon } from '../assets/icons/icon-facebook-white.svg';
+import { ReactComponent as InstaIcon } from '../assets/icons/icon-instagram-white.svg';
+import { ReactComponent as TwitIcon } from '../assets/icons/icon-twitter-white.svg';
 
 const SiteFooter = styled.footer`
   position: fixed;
