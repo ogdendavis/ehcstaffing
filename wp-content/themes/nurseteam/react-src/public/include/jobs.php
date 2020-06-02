@@ -60,8 +60,11 @@ if (!function_exists('ehc_add_job_meta')) {
         $saved_pay = get_post_meta($post->ID, '_job_pay', true);
         $saved_description = get_post_meta($post->ID, '_job_description', true);
 
-        // Get state list from JSON and use it to output options for the state field
+        // Get state & specialties lists from JSON and use them to output options for their fields
         $states = json_decode(file_get_contents(__DIR__ . '/states.json'));
+        $specialties = json_decode(
+            file_get_contents(__DIR__ . '/specialties.json')
+        );
         // HTML output below
         ?>
           <div class="ehc_job_info">
@@ -79,7 +82,16 @@ if (!function_exists('ehc_add_job_meta')) {
             </select>
             Start Date: <input type="date" name="startdate" value="<?php echo $saved_startdate; ?>" />
             Duration: <input type="text" name="duration" value="<?php echo $saved_duration; ?>" />
-            Specialty: <input type="text" name="specialty" value="<?php echo $saved_specialty; ?>" />
+            Specialty:
+            <select name="specialty" value="<?php echo $saved_specialty; ?>">
+              <?php foreach ($specialties as $specialty) {
+                  echo '<option value="' .
+                      $specialty->name .
+                      '">' .
+                      $specialty->name .
+                      '</option>';
+              } ?>
+            </select>
             Unit: <input type="text" name="unit" value="<?php echo $saved_unit; ?>" />
             Shift: <input type="text" name="shift" value="<?php echo $saved_shift; ?>" />
             Pay Info: <textarea name="pay"><?php echo $saved_pay; ?></textarea>
