@@ -69,7 +69,7 @@ const pickStates = States.map(state => (
   </option>
 ));
 
-const JobFilter = ({ allJobs, setDisplayJobs }) => {
+const JobFilter = ({ allJobs, update }) => {
   const [open, setOpen] = useState(false);
   const [selectedStates, setSelectedStates] = useState([]);
 
@@ -85,13 +85,17 @@ const JobFilter = ({ allJobs, setDisplayJobs }) => {
   };
 
   const filterJobs = () => {
-    console.log(selectedStates);
     if (selectedStates.includes('ALL') || selectedStates.length === 0) {
       console.log('all states');
-      setDisplayJobs(allJobs);
+      update(allJobs);
     } else {
-      setDisplayJobs(allJobs.filter(job => selectedStates.includes(job.state)));
+      update(allJobs.filter(job => selectedStates.includes(job.state)));
     }
+  };
+
+  const showAllJobs = () => {
+    setSelectedStates([]);
+    update(allJobs);
   };
 
   return (
@@ -125,6 +129,9 @@ const JobFilter = ({ allJobs, setDisplayJobs }) => {
         </div>
         <div>
           <Button text="Filter" inactive={true} handleClick={filterJobs} />
+        </div>
+        <div>
+          <Button text="Show All" inactive={true} handleClick={showAllJobs} />
         </div>
       </SortOptions>
     </SortContainer>

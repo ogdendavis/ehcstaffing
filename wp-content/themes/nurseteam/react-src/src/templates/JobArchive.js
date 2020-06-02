@@ -7,11 +7,17 @@ import { Link } from 'react-router-dom';
 import JobFilter from '../components/JobFilter';
 import JobListing from '../components/JobListing';
 import JobAppModal from '../components/JobAppModal';
+import Button from '../components/Button';
 
 const JobPageMain = styled.main`
   max-width: ${props => props.theme.contentWidth};
   padding: 0 2rem 2rem;
   margin: 0 auto;
+`;
+
+const Pager = styled.div`
+  margin-top: 2rem;
+  text-align: center;
 `;
 
 const JobArchive = props => {
@@ -24,7 +30,9 @@ const JobArchive = props => {
     email: '',
     phone: '',
   });
-  const [displayJobs, setDisplayJobs] = useState([]);
+  const [filteredJobs, setFilteredJobs] = useState([]);
+  const [numJobsVisible, setNumJobsVisible] = useState(10);
+  const [visibleJobs, setVisibleJobs] = useState([]);
 
   // Passed to modal to toggle visibility
   const toggleApply = () => {
@@ -37,6 +45,26 @@ const JobArchive = props => {
     setSelectedJob(ev.target.value);
   };
 
+  // Passed to JobFilter to handle filtering and paging together
+  const updateJobsWithPaging = j => {
+    setFilteredJobs(j);
+    doPaging({ fj: j, reset: true });
+  };
+
+  // Pass filtered jobs in, get paged jobs out!
+  // Used to load more jobs with "more" button at bottom of page
+  const doPaging = ({ fj, reset = false }) => {
+    const numViz = reset ? 10 : numJobsVisible + 10;
+    // If there are 10 or fewer jobs to start with, do nothing
+    if (fj.length <= numViz) {
+      setVisibleJobs(fj);
+    } else {
+      const numViz = reset ? 10 : numJobsVisible + 10;
+      setVisibleJobs(fj.slice(0, numViz));
+      setNumJobsVisible(numViz);
+    }
+  };
+
   useEffect(() => {
     async function getJobs() {
       await fetch(`${process.env.REACT_APP_HOME}/wp-json/ehcapi/v1/jobs`)
@@ -47,7 +75,8 @@ const JobArchive = props => {
           // Set the jobs that will initialy be displayed
           // For now, it's just all the jobs again
           // Need to add pagination and filtering
-          setDisplayJobs(j);
+          setFilteredJobs(j);
+          setVisibleJobs(j.slice(0, 10));
         });
     }
     getJobs();
@@ -71,8 +100,8 @@ const JobArchive = props => {
         <Link to="/contact">send us your info</Link> to be considered for future
         openings, and check this page regularly for new listings.
       </p>
-      <JobFilter allJobs={allJobs} setDisplayJobs={setDisplayJobs} />
-      {displayJobs.map(job => {
+      <JobFilter allJobs={allJobs} update={updateJobsWithPaging} />
+      {visibleJobs.map(job => {
         const startDate = new Intl.DateTimeFormat('en-US').format(
           new Date(job.startdate)
         );
@@ -86,6 +115,15 @@ const JobArchive = props => {
           />
         );
       })}
+      {filteredJobs.length > visibleJobs.length && (
+        <Pager>
+          <Button
+            text="Load More Jobs &#8595;"
+            handleClick={() => doPaging({ fj: filteredJobs })}
+          />
+        </Pager>
+      )}
+
       {apply && (
         <JobAppModal
           selectedJob={selectedJob}
