@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
-import JobSort from '../components/JobSort';
+import JobFilter from '../components/JobFilter';
 import JobListing from '../components/JobListing';
 import JobAppModal from '../components/JobAppModal';
 
@@ -24,6 +24,7 @@ const JobArchive = props => {
     email: '',
     phone: '',
   });
+  const [displayJobs, setDisplayJobs] = useState([]);
 
   // Passed to modal to toggle visibility
   const toggleApply = () => {
@@ -40,7 +41,14 @@ const JobArchive = props => {
     async function getJobs() {
       await fetch(`${process.env.REACT_APP_HOME}/wp-json/ehcapi/v1/jobs`)
         .then(res => res.json())
-        .then(j => setAllJobs(j));
+        .then(j => {
+          // Store all the jobs
+          setAllJobs(j);
+          // Set the jobs that will initialy be displayed
+          // For now, it's just all the jobs again
+          // Need to add pagination and filtering
+          setDisplayJobs(j);
+        });
     }
     getJobs();
   }, []);
@@ -63,8 +71,8 @@ const JobArchive = props => {
         <Link to="/contact">send us your info</Link> to be considered for future
         openings, and check this page regularly for new listings.
       </p>
-      <JobSort jobs={allJobs} />
-      {allJobs.map(job => {
+      <JobFilter allJobs={allJobs} setDisplayJobs={setDisplayJobs} />
+      {displayJobs.map(job => {
         const startDate = new Intl.DateTimeFormat('en-US').format(
           new Date(job.startdate)
         );
