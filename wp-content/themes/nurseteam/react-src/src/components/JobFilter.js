@@ -6,6 +6,7 @@ import Button from './Button';
 
 // JSON list of states
 import States from '../assets/states';
+import Specialties from '../assets/specialties';
 
 const SortContainer = styled.div`
   background: ${props => props.theme.primaryColor};
@@ -32,6 +33,7 @@ const SortOptions = styled.div`
   overflow: hidden;
   transition: max-height 0.5s ease;
   display: flex;
+  flex-flow: row wrap;
   justify-content: flex-start;
   align-items: flex-end;
 
@@ -40,7 +42,7 @@ const SortOptions = styled.div`
   }
 
   div {
-    padding: 0 1rem;
+    padding: 1rem;
   }
 
   label {
@@ -56,6 +58,10 @@ const SortOptions = styled.div`
     option {
       transition: all 0.25s ease;
     }
+    option.option--all {
+      font-weight: 700;
+      border-bottom: 1px solid #888;
+    }
   }
 
   button {
@@ -69,9 +75,16 @@ const pickStates = States.map(state => (
   </option>
 ));
 
+const pickSpecialties = Specialties.map(sp => (
+  <option key={`pick ${sp.name}`} value={sp.name}>
+    {sp.name}
+  </option>
+));
+
 const JobFilter = ({ allJobs, update }) => {
   const [open, setOpen] = useState(false);
   const [selectedStates, setSelectedStates] = useState([]);
+  const [selectedSpecs, setSelectedSpecs] = useState([]);
 
   // Fired by click event
   const getSelectedStates = ev => {
@@ -84,17 +97,46 @@ const JobFilter = ({ allJobs, update }) => {
     }
   };
 
+  const getSelectedSpecs = ev => {
+    ev.stopPropagation();
+    ev.nativeEvent.stopImmediatePropagation();
+    if (!selectedSpecs.includes(ev.target.value)) {
+      setSelectedSpecs(selectedSpecs.concat(ev.target.value));
+    } else {
+      setSelectedSpecs(selectedSpecs.filter(sp => sp !== ev.target.value));
+    }
+  };
+
   const filterJobs = () => {
-    if (selectedStates.includes('ALL') || selectedStates.length === 0) {
-      console.log('all states');
+    // Check if filtering by state and/or specialty
+    const filterByState = !(
+      selectedStates.includes('ALL') || selectedStates.length === 0
+    );
+    const filterBySpec = !(
+      selectedSpecs.includes('ALL') || selectedSpecs.length === 0
+    );
+
+    if (!filterByState && !filterBySpec) {
+      // No filtering
       update(allJobs);
     } else {
-      update(allJobs.filter(job => selectedStates.includes(job.state)));
+      // Filter by each -- if only filtering by one, will include all values of other
+      let filtered = allJobs.slice();
+      if (filterByState) {
+        filtered = filtered.filter(job => selectedStates.includes(job.state));
+      }
+      if (filterBySpec) {
+        filtered = filtered.filter(job =>
+          selectedSpecs.includes(job.specialty)
+        );
+      }
+      update(filtered);
     }
   };
 
   const showAllJobs = () => {
     setSelectedStates([]);
+    setSelectedSpecs([]);
     update(allJobs);
   };
 
@@ -111,20 +153,30 @@ const JobFilter = ({ allJobs, update }) => {
             name="states"
             id="states"
             value={selectedStates}
-            onChange={() => console.log('change')}
+            onChange={() => console.log('change state')}
             onClick={getSelectedStates}
             multiple
           >
-            <option value="ALL">All States</option>
+            <option value="ALL" className="option--all">
+              All States
+            </option>
             {pickStates}
           </select>
         </div>
         <div>
           <label htmlFor="specialties">Specialty</label>
-          <select name="specialties" id="specialties" multiple>
-            <option value="SpecialtyOne">One</option>
-            <option value="SpecialtyTwo">Two</option>
-            <option value="SpecialtyThree">Three</option>
+          <select
+            name="specialties"
+            id="specialties"
+            value={selectedSpecs}
+            onChange={() => console.log('change specialty')}
+            onClick={getSelectedSpecs}
+            multiple
+          >
+            <option value="ALL" className="option--all">
+              All Specialties
+            </option>
+            {pickSpecialties}
           </select>
         </div>
         <div>
