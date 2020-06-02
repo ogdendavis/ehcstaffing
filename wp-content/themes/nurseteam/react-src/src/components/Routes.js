@@ -10,8 +10,8 @@ import Contact from '../templates/Contact';
 import JobArchive from '../templates/JobArchive';
 import FourOhFour from '../templates/404';
 
-const Routes = () => (
-  <Switch>
+const Routes = ({ location }) => (
+  <Switch location={location}>
     {/* Remember that routes should go from most to least specific */}
     <Route path="/about" key="about_route" component={About} />
     <Route

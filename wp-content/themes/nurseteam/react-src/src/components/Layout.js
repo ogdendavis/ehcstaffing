@@ -1,5 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { useLocation } from 'react-router-dom';
 
 // Components
 import Header from '../components/Header';
@@ -12,15 +14,47 @@ const PageContainer = styled.div`
   min-height: 100vh;
   z-index: 10;
   background: ${props => props.theme.bgColor};
+
+  .transition-group {
+    position: relative;
+  }
+
+  .routes-container {
+    position: absolute:
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .pageFade-enter {
+    opacity: 0;
+    transition: opacity 250ms ease 250ms;
+  }
+  .pageFade-enter-active {
+    opacity: 1;
+  }
+  .pageFade-exit {
+    opacity: 1;
+    transition: opacity 250ms ease;
+  }
+  .pageFade-exit-active {
+    opacity: 0;
+  }
 `;
 
 const Layout = () => {
+  let location = useLocation();
   return (
     <>
       <PageContainer>
         <Header />
-        <Routes />
+        <TransitionGroup>
+          <CSSTransition key={location.key} classNames="pageFade" timeout={500}>
+            <Routes location={location} className="routes-container" />
+          </CSSTransition>
+        </TransitionGroup>
       </PageContainer>
+
       <Footer />
     </>
   );

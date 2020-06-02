@@ -63,7 +63,7 @@ const Section = styled.section`
 
 const Home = props => {
   return (
-    <>
+    <main>
       <Hero>
         <div>
           <h1>We Are Nurse Team</h1>
@@ -117,7 +117,7 @@ const Home = props => {
           </p>
         </div>
       </Section>
-    </>
+    </main>
   );
 };
 
