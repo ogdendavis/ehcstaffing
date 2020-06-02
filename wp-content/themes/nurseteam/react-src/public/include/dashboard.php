@@ -53,7 +53,7 @@ if (!function_exists('ehc_add_dashboard_widgets')) {
     function ehc_build_add_job_widget()
     {
         // Action of form submission handled by ehc_add_job_from_dashboard function
-        ?>
+        $states = json_decode(file_get_contents(__DIR__ . '/states.json')); ?>
         <form class="add_job_widget" action="<?php echo esc_url(
             admin_url('admin-post.php')
         ); ?>" method="POST">
@@ -71,7 +71,17 @@ if (!function_exists('ehc_add_dashboard_widgets')) {
           </style>
           <label for="sourceid">Source ID:</label><input type="text" name="sourceid" id="sourceid" value="" /><br />
           <label for="city">City:</label><input type="text" name="city" id="city" value="" /><br />
-          <label for="state">State:</label><input type="text" name="state" id="state" value="" /><br />
+          <label for="state">State:</label>
+          <select name="state" id="state" value="">
+            <?php foreach ($states as $state) {
+                echo '<option value="' .
+                    $state->abbreviaton .
+                    '">' .
+                    $state->name .
+                    '</option>';
+            } ?>
+          </select>
+          <br />
           <label for="startdate">Start Date:</label><input type="date" name="startdate" id="startdate" value="" /><br />
           <label for="duration">Duration:</label><input type="text" name="duration" id="duration" value="" /><br />
           <label for="specialty">Specialty:</label><input type="text" name="specialty" id="specialty" value="" /><br />

@@ -59,12 +59,24 @@ if (!function_exists('ehc_add_job_meta')) {
         $saved_shift = get_post_meta($post->ID, '_job_shift', true);
         $saved_pay = get_post_meta($post->ID, '_job_pay', true);
         $saved_description = get_post_meta($post->ID, '_job_description', true);
+
+        // Get state list from JSON and use it to output options for the state field
+        $states = json_decode(file_get_contents(__DIR__ . '/states.json'));
         // HTML output below
         ?>
           <div class="ehc_job_info">
             Source ID: <input type="text" name="sourceid" value="<?php echo $saved_sourceid; ?>" />
             City: <input type="text" name="city" value="<?php echo $saved_city; ?>" />
-            State: <input type="text" name="state" value="<?php echo $saved_state; ?>" />
+            State:
+            <select name="state" value="<?php echo $saved_state; ?>">
+              <?php foreach ($states as $state) {
+                  echo '<option value="' .
+                      $state->abbreviaton .
+                      '">' .
+                      $state->name .
+                      '</option>';
+              } ?>
+            </select>
             Start Date: <input type="date" name="startdate" value="<?php echo $saved_startdate; ?>" />
             Duration: <input type="text" name="duration" value="<?php echo $saved_duration; ?>" />
             Specialty: <input type="text" name="specialty" value="<?php echo $saved_specialty; ?>" />
