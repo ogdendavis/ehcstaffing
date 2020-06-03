@@ -28,17 +28,19 @@ const PageContainer = styled.div`
 
   .pageFade-enter {
     opacity: 0;
-    transition: opacity 250ms ease 250ms;
+    z-index: 1;
   }
-  .pageFade-enter-active {
+  .pageFade-enter.pageFade-enter-active {
     opacity: 1;
+    transition: all 250ms ease-in;
   }
   .pageFade-exit {
     opacity: 1;
-    transition: opacity 250ms ease;
+    transition: all 250 ease-out;
   }
-  .pageFade-exit-active {
+  .pageFade-exit.pageFade-exit-active {
     opacity: 0;
+    z-index: -1;
   }
 `;
 
@@ -49,12 +51,11 @@ const Layout = () => {
       <PageContainer>
         <Header />
         <TransitionGroup>
-          <CSSTransition key={location.key} classNames="pageFade" timeout={500}>
+          <CSSTransition key={location.key} classNames="pageFade" timeout={250}>
             <Routes location={location} className="routes-container" />
           </CSSTransition>
         </TransitionGroup>
       </PageContainer>
-
       <Footer />
     </>
   );
