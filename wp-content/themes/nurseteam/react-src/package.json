@@ -1,5 +1,5 @@
 {
-  "name": "ehcstaffing",
+  "name": "nurseteam",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -40,6 +40,6 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "/ehcstaffing/wp-content/themes/nurseteam",
-  "browserLaunchTo": "http://localhost/ehcstaffing"
+  "homepage": "/nurseteam/wp-content/themes/nurseteam",
+  "browserLaunchTo": "http://localhost/nurseteam"
 }
