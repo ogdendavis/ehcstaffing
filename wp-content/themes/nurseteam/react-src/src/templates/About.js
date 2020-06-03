@@ -9,6 +9,11 @@ const AboutPageMain = styled.main`
   img {
     max-width: 100%;
   }
+
+  @media only screen and (max-width: calc(${props =>
+    props.theme.contentWidth} + 10vw)) {
+    max-width: 90vw;
+  }
 `;
 
 const About = props => {

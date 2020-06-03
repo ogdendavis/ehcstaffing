@@ -12,6 +12,11 @@ import Button from '../components/Button';
 const JobPageMain = styled.main`
   max-width: ${props => props.theme.contentWidth};
   margin: 0 auto 2rem;
+
+  @media only screen and (max-width: calc(${props =>
+    props.theme.contentWidth} + 10vw)) {
+    max-width: 90vw;
+  }
 `;
 
 const Pager = styled.div`
