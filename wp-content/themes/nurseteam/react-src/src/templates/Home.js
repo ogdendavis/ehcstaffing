@@ -35,6 +35,25 @@ const Hero = styled.div`
     font-size: 1.25rem;
     font-weight: 300;
   }
+
+  @media only screen and (max-width: 1150px) {
+    div {
+      top: auto;
+      bottom: 2rem;
+      color: #fff;
+      text-shadow: 0px 0px 0.5rem ${props => props.theme.primaryColor},
+        0 0 1rem #ddd;
+    }
+  }
+
+  @media only screen and (max-width: 400px) {
+    h1 {
+      font-size: 3rem;
+    }
+    span {
+      font-size: 1.1rem;
+    }
+  }
 `;
 
 const Section = styled.section`
@@ -48,6 +67,7 @@ const Section = styled.section`
   div {
     width: 45%;
     max-width: 600px;
+    min-width: 300px;
     margin: 0 1rem;
   }
 
@@ -58,6 +78,20 @@ const Section = styled.section`
   p {
     max-width: ${props => `calc(${props.theme.contentWidth} *.75)`};
     margin: 1rem auto;
+  }
+
+  @media only screen and (max-width: 850px) {
+    flex-flow: row wrap;
+    padding: 1rem;
+
+    div {
+      width: 100%;
+    }
+
+    .image-container {
+      order: 2;
+      margin-top: 1rem;
+    }
   }
 `;
 
@@ -81,7 +115,7 @@ const Home = props => {
             <Button text="See job listings" />
           </Link>
         </div>
-        <div>
+        <div className="image-container">
           <img
             src={process.env.PUBLIC_URL + '/assets/PROPOSEDhomepage1.png'}
             alt="Group of nurses"
@@ -89,7 +123,7 @@ const Home = props => {
         </div>
       </Section>
       <Section centered={true}>
-        <div>
+        <div className="image-container">
           <img
             src={process.env.PUBLIC_URL + '/assets/PROPOSEDhomepage2.png'}
             alt="Nurse and doctor conferring"
