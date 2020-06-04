@@ -18,6 +18,7 @@ const PostTease = styled(Link)`
   display: block;
   width: 100%;
   padding: 1rem;
+  box-sizing: border-box;
   text-decoration: none;
   color: ${props => props.theme.textColor};
   transition: background-color 0.5s ease;
