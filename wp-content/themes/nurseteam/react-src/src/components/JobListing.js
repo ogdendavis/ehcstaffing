@@ -21,10 +21,11 @@ const JobListingContainer = styled.article`
 
 const FrontPage = styled.div`
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: space-between;
   align-items: flex-end;
   cursor: pointer;
+
   p:first-child {
     font-weight: 700;
   }

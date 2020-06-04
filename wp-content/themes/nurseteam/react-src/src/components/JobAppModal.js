@@ -31,6 +31,16 @@ const JobForm = styled.form`
     width: 8rem;
     margin-bottom: 1rem;
   }
+
+  @media only screen and (max-width: 600px) {
+    margin: 0 1rem;
+    label {
+      display: block;
+      width: auto;
+      margin-bottom: 0;
+      margin-top: 0.5rem;
+    }
+  }
 `;
 
 // X to indicate modal is closable
@@ -50,6 +60,17 @@ const Closer = styled.div`
   &:hover:before {
     color: ${props => props.theme.primaryColor};
   }
+
+  @media only screen and (max-width: 450px) {
+    &:before {
+      right: 0;
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    &:before {
+      right: 1rem;
+    }
+  }
 `;
 
 // Styles copied from Button component
@@ -66,6 +87,10 @@ const JobSubmit = styled.input`
 
   &:hover {
     transform: scale(1.1);
+  }
+
+  @media only screen and (max-width: 600px) {
+    margin-top: 1rem;
   }
 `;
 

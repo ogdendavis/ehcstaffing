@@ -55,6 +55,7 @@ const SortOptions = styled.div`
 
   select {
     padding: 0 0.5rem;
+
     option {
       transition: all 0.25s ease;
     }
@@ -63,9 +64,17 @@ const SortOptions = styled.div`
       border-bottom: 1px solid #888;
     }
   }
+`;
+
+const SortButtons = styled.div`
+  display: flex;
+  flex-flow: row wrap;
 
   button {
     cursor: pointer;
+  }
+  button:first-child {
+    margin-right: 1rem;
   }
 `;
 
@@ -179,12 +188,10 @@ const JobFilter = ({ allJobs, update }) => {
             {pickSpecialties}
           </select>
         </div>
-        <div>
+        <SortButtons>
           <Button text="Filter" inactive={true} handleClick={filterJobs} />
-        </div>
-        <div>
           <Button text="Show All" inactive={true} handleClick={showAllJobs} />
-        </div>
+        </SortButtons>
       </SortOptions>
     </SortContainer>
   );
