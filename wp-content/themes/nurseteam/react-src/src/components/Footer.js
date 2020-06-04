@@ -23,10 +23,15 @@ const FooterInner = styled.div`
   display: flex;
   flex-flow: row wrap;
   align-items: flex-start;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
   max-width: ${props => props.theme.contentWidth};
   margin: 0 auto;
+
+  @media only screen and (max-width: 600px) {
+    flex-flow: column nowrap;
+    align-items: center;
+  }
 `;
 
 const FooterNav = styled.nav`
@@ -63,14 +68,31 @@ const FooterNav = styled.nav`
     opacity: 1;
     left: 0;
   }
+
+  @media only screen and (max-width: 600px) {
+    li {
+      display: inline-block;
+      margin: 0 0.5rem 1rem;
+    }
+  }
 `;
 
 const FooterSocial = styled.div`
   display: flex;
   flex-flow: row wrap;
   svg {
-    max-width: 60px;
+    width: 60px;
+    max-width: 7vw;
     margin: 0 1rem;
+  }
+`;
+
+const FooterLogo = styled.div`
+  img {
+    max-width: 20vw;
+  }
+  @media only screen and (max-width: 600px) {
+    margin-top: 1rem;
   }
 `;
 
@@ -79,6 +101,10 @@ const FooterFooter = styled.div`
   width: 100%;
   text-align: center;
   font-size: 0.8rem;
+
+  @media only screen and (max-width: 600px) {
+    margin-top: 1rem;
+  }
 `;
 
 const Footer = () => {
@@ -109,12 +135,12 @@ const Footer = () => {
           <InstaIcon />
           <TwitIcon />
         </FooterSocial>
-        <div>
+        <FooterLogo>
           <img
             src={`${process.env.PUBLIC_URL}/assets/logoText150.png`}
             alt="Nurse Team"
           />
-        </div>
+        </FooterLogo>
         <FooterFooter>
           © {new Date().getFullYear()} Essential Healthcare Staffing and
           Consulting
