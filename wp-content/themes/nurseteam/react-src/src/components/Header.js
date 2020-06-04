@@ -23,6 +23,11 @@ const LogoContainer = styled.div`
   img {
     width: 100%;
   }
+
+  @media only screen and (max-width: 600px) {
+    display: none;
+    visibility: hidden;
+  }
 `;
 
 const HeaderNav = styled.nav`
@@ -50,6 +55,10 @@ const HeaderLink = styled(Link)`
   color: ${props => props.theme.primaryColor};
   font-weight: 500;
   text-decoration: none;
+
+  &:last-child {
+    margin-right: 0;
+  }
 
   &.emphasis {
     background: ${props => props.theme.secondaryColor};

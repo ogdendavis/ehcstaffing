@@ -8,20 +8,6 @@ Alternate hero: https://www.shutterstock.com/image-photo/healthcare-team-id-badg
 Homepage 1: https://www.shutterstock.com/image-photo/healthcare-workers-sitting-modern-hospital-low-1133220080
 Homepage 2: https://www.shutterstock.com/image-photo/two-healthcare-workers-talk-lobby-busy-1133218265
 
-## Build note
-
-The build assumes that you're putting the static folder in the web root, but I
-am actually leaving it in the theme folder created by the build (where it's
-automatically placed.)
-
-Fixed with a shell script, copied below. RUN THIS SCRIPT LOCALLY, BEFORE COPYING
-THEME FOLDER TO THE SERVER. This script is for the dev server, so I'll need to
-make an updated version once we're on live:
-
-function fixDev() {
-sed -i '.bak' 's/="https:\/\/dev.ogdendavis.com\/nurseteam\/static\//="https:\/\/dev.ogdendavis.com\/nurseteam\/wp-content\/themes\/nurseteam\/static\//g' /Applications/MAMP/htdocs/ehcstaffing/wp-content/themes/nurseteam/nurseteam/index.php
-}
-
 ---
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
