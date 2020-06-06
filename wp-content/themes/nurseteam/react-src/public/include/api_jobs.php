@@ -1,7 +1,6 @@
 <?php
 /*
  * Create REST API endpoint to retrieve all job info
- * TODO: Implement paging
  * TODO: API endpoint for one job (or do I handle in React?)
  */
 

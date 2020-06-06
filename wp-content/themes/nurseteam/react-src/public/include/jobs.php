@@ -7,8 +7,8 @@
 /*
  * Add custom post type for jobs
  */
-if (!function_exists('ehc_custom_post_types')) {
-    function ehc_custom_post_types()
+if (!function_exists('ehc_custom_post_jobs')) {
+    function ehc_custom_post_jobs()
     {
         register_post_type('ehc_job', [
             'labels' => [
@@ -22,7 +22,7 @@ if (!function_exists('ehc_custom_post_types')) {
             'rewrite' => ['slug' => 'jobs'],
         ]);
     }
-    add_action('init', 'ehc_custom_post_types');
+    add_action('init', 'ehc_custom_post_jobs');
 }
 
 /*
