@@ -102,12 +102,14 @@ if (!function_exists('ehc_submit_application_form')) {
             'post_type' => 'ehc_application',
             'post_status' => 'publish',
             'meta_input' => [
-                '_app_firstname' => $_REQUEST['firstname'],
-                '_app_lastname' => $_REQUEST['lastname'],
-                '_app_email' => $_REQUEST['email'],
-                '_app_phone' => $_REQUEST['phone'],
-                '_app_job_sourceid' => $_REQUEST['whichJob'],
-                '_app_job_localid' => $_REQUEST['localid'],
+                '_app_firstname' => sanitize_text_field($_REQUEST['firstname']),
+                '_app_lastname' => sanitize_text_field($_REQUEST['lastname']),
+                '_app_email' => sanitize_email($_REQUEST['email']),
+                '_app_phone' => sanitize_text_field($_REQUEST['phone']),
+                '_app_job_sourceid' => sanitize_text_field(
+                    $_REQUEST['whichJob']
+                ),
+                '_app_job_localid' => sanitize_text_field($_REQUEST['localid']),
                 '_app_resume' => $_REQUEST['resume'],
                 '_app_coverletter' => $_REQUEST['coverletter'],
             ],
