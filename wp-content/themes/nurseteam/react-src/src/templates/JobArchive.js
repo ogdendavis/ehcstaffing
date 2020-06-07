@@ -88,6 +88,7 @@ const JobArchive = props => {
   const jobsForModal = [];
   for (const key in allJobs) {
     jobsForModal.push({
+      localid: allJobs[key].localid,
       sourceid: allJobs[key].sourceid,
       display_title: allJobs[key].display_title,
     });

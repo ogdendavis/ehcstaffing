@@ -102,13 +102,14 @@ if (!function_exists('ehc_submit_application_form')) {
             'post_type' => 'ehc_application',
             'post_status' => 'publish',
             'meta_input' => [
-                '_app_firstname' => $_REQUEST['firstname'][0],
-                '_app_lastname' => $_REQUEST['lastname'][0],
-                '_app_email' => $_REQUEST['email'][0],
-                '_app_phone' => $_REQUEST['phone'][0],
-                '_app_job_sourceid' => $_REQUEST['whichJob'][0],
-                '_app_resume' => $_REQUEST['resume'][0],
-                '_app_coverletter' => $_REQUEST['coverletter'][0],
+                '_app_firstname' => $_REQUEST['firstname'],
+                '_app_lastname' => $_REQUEST['lastname'],
+                '_app_email' => $_REQUEST['email'],
+                '_app_phone' => $_REQUEST['phone'],
+                '_app_job_sourceid' => $_REQUEST['whichJob'],
+                '_app_job_localid' => $_REQUEST['localid'],
+                '_app_resume' => $_REQUEST['resume'],
+                '_app_coverletter' => $_REQUEST['coverletter'],
             ],
         ];
         wp_insert_post($args);
@@ -117,4 +118,56 @@ if (!function_exists('ehc_submit_application_form')) {
         die();
     }
     add_action('admin_post_submit_jobapp', 'ehc_submit_application_form');
+}
+
+/*
+ * Modify back-end display on applications list page
+ */
+if (!function_exists('ehc_add_application_columns')) {
+    // First function defines the columns visible on the list page
+    function ehc_add_application_columns()
+    {
+        return [
+            'cb' => __('<input type="checkbox" />'),
+            'name' => __('Applicant Name'),
+            'job' => __('Job Title'),
+            'sourceid' => __('Job Source ID'),
+        ];
+    }
+    add_filter(
+        'manage_ehc_application_posts_columns',
+        'ehc_add_application_columns'
+    );
+
+    // Next function populates the columns defined above with data for each application
+    function ehc_fill_application_columns($column, $post_id)
+    {
+        // Full name for display
+        $full_name =
+            get_post_meta($post_id, '_app_firstname', true) .
+            ' ' .
+            get_post_meta($post_id, '_app_lastname', true);
+        // Recreate display_title from API using job meta
+        $job_id = get_post_meta($post_id, '_app_job_localid', true);
+        $job_title =
+            get_post_meta($job_id, '_job_specialty', true) .
+            ' in ' .
+            get_post_meta($job_id, '_job_city', true) .
+            ', ' .
+            get_post_meta($job_id, '_job_state', true);
+        // Echo the output based on column
+        if ($column === 'sourceid') {
+            echo get_post_meta($post_id, '_app_job_sourceid', true);
+        } elseif ($column === 'name') {
+            echo $full_name;
+        } elseif ($column === 'job') {
+            echo $job_title;
+        }
+    }
+    add_action(
+        'manage_ehc_application_posts_custom_column',
+        'ehc_fill_application_columns',
+        10,
+        2
+    );
 }

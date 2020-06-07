@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 const JobModal = styled.div`
@@ -102,6 +102,8 @@ const JobAppModal = ({
   info,
   setInfo,
 }) => {
+  const [selectedJobLocalId, setSelectedJobLocalId] = useState(0);
+
   const handleClick = ev => {
     if (ev.target.id === 'jobModal' || ev.target.id === 'closer') {
       toggleModal();
@@ -113,11 +115,24 @@ const JobAppModal = ({
     setInfo(info => ({ ...info, [ev.target.name]: ev.target.value }));
   };
 
+  const handleJobChange = ev => {
+    const targetJob = jobs.filter(j => j.sourceid == ev.target.value);
+    setSelectedJobLocalId(targetJob[0].localid);
+  };
+
+  useEffect(() => {
+    function setInitialLocalJobId() {
+      const targetJob = jobs.filter(j => j.sourceid == selectedJob);
+      setSelectedJobLocalId(targetJob[0].localid);
+    }
+    setInitialLocalJobId();
+  }, []);
+
   return (
     <JobModal id="jobModal" onClick={handleClick}>
       <JobForm
         action={process.env.REACT_APP_HOME + '/wp-admin/admin-post.php'}
-        method="GET"
+        method="POST"
       >
         <Closer id="closer" />
         <h2>Submit Your Application</h2>
@@ -158,7 +173,12 @@ const JobAppModal = ({
         />
         <br />
         <label htmlFor="whichJob">Applying for:</label>
-        <select id="whichJob" name="whichJob" defaultValue={selectedJob}>
+        <select
+          id="whichJob"
+          name="whichJob"
+          defaultValue={selectedJob}
+          onChange={handleJobChange}
+        >
           {jobs.map(job => {
             return (
               <option key={`${job.sourceid}option`} value={job.sourceid}>
@@ -167,6 +187,7 @@ const JobAppModal = ({
             );
           })}
         </select>
+        <input type="hidden" name="localid" value={selectedJobLocalId} />
         <br />
         <label htmlFor="resume">Resume:</label>
         <input name="resume" id="resume" type="file" />

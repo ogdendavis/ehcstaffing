@@ -41,6 +41,8 @@ if (!function_exists('ehc_get_jobs')) {
             $simplified['city'] .
             ', ' .
             $simplified['state'];
+        // Add local id to simplify fetching job data from associated applications
+        $simplified['localid'] = $job_post->ID;
         return $simplified;
     }
     // Add endpoint
