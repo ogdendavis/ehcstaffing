@@ -117,7 +117,7 @@ const JobAppModal = ({
     <JobModal id="jobModal" onClick={handleClick}>
       <JobForm
         action={process.env.REACT_APP_HOME + '/wp-admin/admin-post.php'}
-        method="POST"
+        method="GET"
       >
         <Closer id="closer" />
         <h2>Submit Your Application</h2>

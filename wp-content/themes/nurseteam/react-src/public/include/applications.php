@@ -88,3 +88,33 @@ if (!function_exists('ehc_hide_add_app_buttons')) {
     }
     add_action('admin_init', 'ehc_hide_add_app_buttons');
 }
+
+/*
+ * Handle front-end job application form submission
+ */
+if (!function_exists('ehc_submit_application_form')) {
+    function ehc_submit_application_form()
+    {
+        // TODO: VALIDATE!
+        // Args for wp_insert_post
+        $args = [
+            'ID' => 0,
+            'post_type' => 'ehc_application',
+            'post_status' => 'publish',
+            'meta_input' => [
+                '_app_firstname' => $_REQUEST['firstname'][0],
+                '_app_lastname' => $_REQUEST['lastname'][0],
+                '_app_email' => $_REQUEST['email'][0],
+                '_app_phone' => $_REQUEST['phone'][0],
+                '_app_job_sourceid' => $_REQUEST['whichJob'][0],
+                '_app_resume' => $_REQUEST['resume'][0],
+                '_app_coverletter' => $_REQUEST['coverletter'][0],
+            ],
+        ];
+        wp_insert_post($args);
+        // Temp reload redirect -- update to success message
+        wp_redirect($_SERVER['HTTP_REFERER']);
+        die();
+    }
+    add_action('admin_post_submit_jobapp', 'ehc_submit_application_form');
+}
