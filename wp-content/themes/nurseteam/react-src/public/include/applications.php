@@ -51,7 +51,70 @@ if (!function_exists('ehc_add_app_meta')) {
     // Markup for the meta box
     function build_ehc_app_info($post)
     {
-        var_dump(get_post_meta($post->ID));
+        // Combine first and last names for display
+        $applicant_name =
+            get_post_meta($post->ID, '_app_firstname', true) .
+            ' ' .
+            get_post_meta($post->ID, '_app_lastname', true);// Markup!
+        ?>
+          <style media="screen">
+            .app-info {
+              font-size: 1rem;
+            }
+            .app-info .key {
+              font-weight: 700;
+            }
+          </style>
+          <div class="app-info">
+              <h3><?php echo $applicant_name; ?></h3>
+            <div>
+              <span class="key">Phone:</span>
+              <span class="value"><?php echo get_post_meta(
+                  $post->ID,
+                  '_app_phone',
+                  true
+              ); ?></span>
+            </div>
+            <div>
+              <span class="key">Email:</span>
+              <span class="value"><?php echo get_post_meta(
+                  $post->ID,
+                  '_app_email',
+                  true
+              ); ?></span>
+            </div>
+            <div>
+              <span class="key">Job:</span>
+              <span class="value"><?php echo get_post_meta(
+                  $post->ID,
+                  '_app_job_sourceid',
+                  true
+              ) .
+                  ' - ' .
+                  get_post_meta(
+                      $post->ID,
+                      '_app_job_display_title',
+                      true
+                  ); ?></span>
+            </div>
+            <div>
+              <span class="key">Resume:</span>
+              <span class="value"><?php echo get_post_meta(
+                  $post->ID,
+                  '_app_resume',
+                  true
+              ); ?></span>
+            </div>
+            <div>
+              <span class="key">Cover Letter:</span>
+              <span class="value"><?php echo get_post_meta(
+                  $post->ID,
+                  '_app_coverletter',
+                  true
+              ); ?></span>
+            </div>
+          </div>
+        <?php
     }
 }
 
@@ -95,7 +158,15 @@ if (!function_exists('ehc_hide_add_app_buttons')) {
 if (!function_exists('ehc_submit_application_form')) {
     function ehc_submit_application_form()
     {
-        // TODO: VALIDATE!
+        // Use local id to recreate job display title provided in job API
+        $job_id = sanitize_text_field($_REQUEST['localid']);
+        $job_title =
+            get_post_meta($job_id, '_job_specialty', true) .
+            ' in ' .
+            get_post_meta($job_id, '_job_city', true) .
+            ', ' .
+            get_post_meta($job_id, '_job_state', true);
+
         // Args for wp_insert_post
         $args = [
             'ID' => 0,
@@ -109,7 +180,8 @@ if (!function_exists('ehc_submit_application_form')) {
                 '_app_job_sourceid' => sanitize_text_field(
                     $_REQUEST['whichJob']
                 ),
-                '_app_job_localid' => sanitize_text_field($_REQUEST['localid']),
+                '_app_job_localid' => $job_id,
+                '_app_job_display_title' => $job_title,
                 '_app_resume' => $_REQUEST['resume'],
                 '_app_coverletter' => $_REQUEST['coverletter'],
             ],
@@ -149,21 +221,13 @@ if (!function_exists('ehc_add_application_columns')) {
             get_post_meta($post_id, '_app_firstname', true) .
             ' ' .
             get_post_meta($post_id, '_app_lastname', true);
-        // Recreate display_title from API using job meta
-        $job_id = get_post_meta($post_id, '_app_job_localid', true);
-        $job_title =
-            get_post_meta($job_id, '_job_specialty', true) .
-            ' in ' .
-            get_post_meta($job_id, '_job_city', true) .
-            ', ' .
-            get_post_meta($job_id, '_job_state', true);
         // Echo the output based on column
         if ($column === 'sourceid') {
             echo get_post_meta($post_id, '_app_job_sourceid', true);
         } elseif ($column === 'name') {
             echo $full_name;
         } elseif ($column === 'job') {
-            echo $job_title;
+            echo get_post_meta($post_id, '_app_job_display_title', true);
         }
     }
     add_action(
