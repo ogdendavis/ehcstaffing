@@ -22,7 +22,7 @@ const About = props => {
   useEffect(() => {
     async function getAboutPage() {
       await fetch(
-        `${process.env.REACT_APP_HOME}/wp-json/wp/v2/pages?_slug=about`
+        `${process.env.REACT_APP_HOME}/wp-json/wp/v2/pages?slug=about`
       )
         .then(res => res.json())
         .then(j => setPage(j[0]));
