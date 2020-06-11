@@ -106,9 +106,7 @@ const Home = props => {
     getHomepage();
   }, []);
 
-  return !content ? (
-    ''
-  ) : (
+  return (
     <main>
       <Hero>
         <div>
@@ -120,7 +118,13 @@ const Home = props => {
         <div>
           <h2>{content['Section 1 Head']}</h2>
           <p>{content['Secton 1 Body']}</p>
-          <Link to={content['Section 1 Button Path']}>
+          <Link
+            to={
+              content['Section 1 Button Path']
+                ? content['Section 1 Button Path']
+                : '/'
+            }
+          >
             <Button text={content['Section 1 Button Text']} />
           </Link>
         </div>
@@ -141,7 +145,13 @@ const Home = props => {
         <div>
           <h2>{content['Section 2 Head']}</h2>
           <p>{content['Secton 2 Body']}</p>
-          <Link to={content['Section 2 Button Path']}>
+          <Link
+            to={
+              content['Section 2 Button Path']
+                ? content['Section 2 Button Path']
+                : '/'
+            }
+          >
             <Button text={content['Section 2 Button Text']} />
           </Link>
         </div>
