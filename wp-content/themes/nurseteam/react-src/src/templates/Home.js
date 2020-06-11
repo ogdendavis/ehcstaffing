@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -96,23 +96,32 @@ const Section = styled.section`
 `;
 
 const Home = props => {
-  return (
+  const [content, setContent] = useState(false);
+  useEffect(() => {
+    async function getHomepage() {
+      await fetch(`${process.env.REACT_APP_HOME}/wp-json/ehcapi/v1/homepage`)
+        .then(res => res.json())
+        .then(j => setContent(j));
+    }
+    getHomepage();
+  }, []);
+
+  return !content ? (
+    ''
+  ) : (
     <main>
       <Hero>
         <div>
-          <h1>We Are Nurse Team</h1>
-          <span>And we're going to get you a badass job</span>
+          <h1>{content['Hero Headline']}</h1>
+          <span>{content['Hero Subhead']}</span>
         </div>
       </Hero>
       <Section centered={true}>
         <div>
-          <h2>Find The Best Travel Nurse Jobs</h2>
-          <p>
-            We have up-to-date listings of the best travel nursing opportunities
-            around the U.S.
-          </p>
-          <Link to="/jobs">
-            <Button text="See job listings" />
+          <h2>{content['Section 1 Head']}</h2>
+          <p>{content['Secton 1 Body']}</p>
+          <Link to={content['Section 1 Button Path']}>
+            <Button text={content['Section 1 Button Text']} />
           </Link>
         </div>
         <div className="image-container">
@@ -130,26 +139,15 @@ const Home = props => {
           />
         </div>
         <div>
-          <h2>Let The Jobs Find You</h2>
-          <p>
-            Want to be recruited for travel nursing opportunities that fit your
-            preferences and skill set? Upload your resume and preferences, and
-            we'll reach out to you when there's an opportunity that fits.
-          </p>
-          <Link to="/contact">
-            <Button text="Upload your info" />
+          <h2>{content['Section 2 Head']}</h2>
+          <p>{content['Secton 2 Body']}</p>
+          <Link to={content['Section 2 Button Path']}>
+            <Button text={content['Section 2 Button Text']} />
           </Link>
         </div>
       </Section>
       <Section centered={true}>
-        <div>
-          <h2>We need more content!</h2>
-          <p>
-            As you can tell, I'm just making this up. Marc, think about what you
-            want to communicate to your prospects, and we'll find the best way
-            to put those things on the homepage in a high-impact way!
-          </p>
-        </div>
+        <div dangerouslySetInnerHTML={{ __html: content['page_body'] }} />
       </Section>
     </main>
   );
