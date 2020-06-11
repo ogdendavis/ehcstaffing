@@ -10,7 +10,7 @@ require_once __DIR__ . '/include/capabilities.php';
 require_once __DIR__ . '/include/api_jobs.php';
 // Handle form submissions
 require_once __DIR__ . '/include/forms.php';
-// Create custom application post type
+// Create custom application post type & handle form submission
 require_once __DIR__ . '/include/applications.php';
-// Create endpoint for front-end forms to create applications
-require_once __DIR__ . '/include/api_applications.php';
+// Create endpoint to get all content (inc custom fields) for homepage
+require_once __DIR__ . '/include/api_homepage.php';
