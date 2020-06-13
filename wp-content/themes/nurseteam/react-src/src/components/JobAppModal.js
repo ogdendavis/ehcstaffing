@@ -32,6 +32,11 @@ const JobForm = styled.form`
     margin-bottom: 1rem;
   }
 
+  p {
+    font-style: italic;
+    font-size: 0.8rem;
+  }
+
   @media only screen and (max-width: 600px) {
     margin: 0 1rem;
     label {
@@ -148,6 +153,7 @@ const JobAppModal = ({
           id="firstname"
           value={info.firstname}
           onChange={handleUpdateInfo}
+          required
         />
         <br />
         <label htmlFor="lastname">Last Name:</label>
@@ -157,6 +163,7 @@ const JobAppModal = ({
           id="lastname"
           value={info.lastname}
           onChange={handleUpdateInfo}
+          required
         />
         <br />
         <label htmlFor="email">Email:</label>
@@ -166,6 +173,7 @@ const JobAppModal = ({
           id="email"
           value={info.email}
           onChange={handleUpdateInfo}
+          required
         />
         <br />
         <label htmlFor="phone">Phone:</label>
@@ -175,6 +183,7 @@ const JobAppModal = ({
           id="phone"
           value={info.phone}
           onChange={handleUpdateInfo}
+          required
         />
         <br />
         <label htmlFor="whichJob">Applying for:</label>
@@ -183,6 +192,7 @@ const JobAppModal = ({
           name="whichJob"
           defaultValue={selectedJob}
           onChange={handleJobChange}
+          required
         >
           {jobs.map(job => {
             return (
@@ -194,13 +204,28 @@ const JobAppModal = ({
         </select>
         <input type="hidden" name="localid" value={selectedJobLocalId} />
         <br />
+        <p>
+          Please upload resume and coverletter (optional) as .doc, .docx, or
+          .pdf
+        </p>
         <label htmlFor="resume">Resume:</label>
-        <input name="resume" id="resume" type="file" />
+        <input
+          name="resume"
+          id="resume"
+          type="file"
+          accept=".doc,.docx,.pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+          required
+        />
         <br />
         <label htmlFor="coverletter">Cover Letter:</label>
         <input name="coverletter" id="coverletter" type="file" />
         <br />
-        <input type="hidden" name="action" value="submit_jobapp" />
+        <input
+          type="hidden"
+          name="action"
+          value="submit_jobapp"
+          accept=".doc,.docx,.pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+        />
         <JobSubmit type="submit" value="Submit" />
       </JobForm>
     </JobModal>
