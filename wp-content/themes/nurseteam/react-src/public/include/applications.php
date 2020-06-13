@@ -99,19 +99,31 @@ if (!function_exists('ehc_add_app_meta')) {
             </div>
             <div>
               <span class="key">Resume:</span>
-              <span class="value"><?php echo get_post_meta(
-                  $post->ID,
-                  '_app_resume',
-                  true
-              ); ?></span>
+              <span class="value">
+                <a href="<?php echo get_template_directory_uri() .
+                    '/uploads/' .
+                    get_post_meta(
+                        $post->ID,
+                        '_app_resume',
+                        true
+                    ); ?>" target="_blank">
+                  View File
+                </a>
+              </span>
             </div>
             <div>
               <span class="key">Cover Letter:</span>
-              <span class="value"><?php echo get_post_meta(
-                  $post->ID,
-                  '_app_coverletter',
-                  true
-              ); ?></span>
+              <span class="value">
+                <a href="<?php echo get_template_directory_uri() .
+                    '/uploads/' .
+                    get_post_meta(
+                        $post->ID,
+                        '_app_coverletter',
+                        true
+                    ); ?>" target="_blank">
+                  View File
+                </a>
+              </span>
             </div>
           </div>
         <?php
@@ -158,14 +170,47 @@ if (!function_exists('ehc_hide_add_app_buttons')) {
 if (!function_exists('ehc_submit_application_form')) {
     function ehc_submit_application_form()
     {
+        // First, grab request info that we'll use for more than just piping it into the new post
+        $firstname = sanitize_text_field($_REQUEST['firstname']);
+        $lastname = sanitize_text_field($_REQUEST['lastname']);
+        $localid = sanitize_text_field($_REQUEST['localid']);
+        $sourceid = sanitize_text_field($_REQUEST['whichJob']);
+
         // Use local id to recreate job display title provided in job API
-        $job_id = sanitize_text_field($_REQUEST['localid']);
         $job_title =
-            get_post_meta($job_id, '_job_specialty', true) .
+            get_post_meta($localid, '_job_specialty', true) .
             ' in ' .
-            get_post_meta($job_id, '_job_city', true) .
+            get_post_meta($localid, '_job_city', true) .
             ', ' .
-            get_post_meta($job_id, '_job_state', true);
+            get_post_meta($localid, '_job_state', true);
+
+        // Handle file uploads
+        // Get the custom application upload directory
+
+        $app_dir =
+            trailingslashit(plugin_dir_path(dirname(__FILE__))) . 'uploads';
+        // If dir isn't there, make it!
+        if (!is_dir($app_dir)) {
+            wp_mkdir_p($app_dir);
+        }
+
+        // Build filenames
+        $resume_filename = wp_unique_filename(
+            $app_dir,
+            'resume_' . $sourceid . '_' . $lastname
+        );
+        $coverletter_filename = wp_unique_filename(
+            $app_dir,
+            'coverletter_' . $sourceid . '_' . $lastname
+        );
+
+        // Grab the temporarly files from $_FILES, and put them in our custom directory
+        $resume_source = $_FILES['resume']['tmp_name'];
+        $resume_dest = trailingslashit($app_dir) . $resume_filename;
+        move_uploaded_file($resume_source, $resume_dest);
+        $coverletter_source = $_FILES['coverletter']['tmp_name'];
+        $coverletter_dest = trailingslashit($app_dir) . $coverletter_filename;
+        move_uploaded_file($coverletter_source, $coverletter_dest);
 
         // Args for wp_insert_post
         $args = [
@@ -173,20 +218,19 @@ if (!function_exists('ehc_submit_application_form')) {
             'post_type' => 'ehc_application',
             'post_status' => 'publish',
             'meta_input' => [
-                '_app_firstname' => sanitize_text_field($_REQUEST['firstname']),
-                '_app_lastname' => sanitize_text_field($_REQUEST['lastname']),
+                '_app_firstname' => $firstname,
+                '_app_lastname' => $lastname,
                 '_app_email' => sanitize_email($_REQUEST['email']),
                 '_app_phone' => sanitize_text_field($_REQUEST['phone']),
-                '_app_job_sourceid' => sanitize_text_field(
-                    $_REQUEST['whichJob']
-                ),
-                '_app_job_localid' => $job_id,
+                '_app_job_sourceid' => $sourceid,
+                '_app_job_localid' => $localid,
                 '_app_job_display_title' => $job_title,
-                '_app_resume' => $_REQUEST['resume'],
-                '_app_coverletter' => $_REQUEST['coverletter'],
+                '_app_resume' => $resume_filename,
+                '_app_coverletter' => $coverletter_filename,
             ],
         ];
         wp_insert_post($args);
+
         // Temp reload redirect -- update to success message
         wp_redirect($_SERVER['HTTP_REFERER']);
         die();
