@@ -78,7 +78,7 @@ if (!function_exists('ehc_add_dashboard_widgets')) {
           <label for="state">State:</label><select name="state" id="state" value="">
             <?php foreach ($states as $state) {
                 echo '<option value="' .
-                    $state->abbreviaton .
+                    $state->abbreviation .
                     '">' .
                     $state->name .
                     '</option>';
