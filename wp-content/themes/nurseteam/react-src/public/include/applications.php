@@ -206,6 +206,18 @@ if (!function_exists('ehc_submit_application_form')) {
             'coverletter_' . $sourceid . '_' . $lastname
         );
 
+        // Add correct extensions to filenames
+        $resume_extension = array_pop(explode('.', $_FILES['resume']['name']));
+        if (strlen($resume_extension) > 0) {
+            $resume_filename .= '.' . $resume_extension;
+        }
+        $coverletter_extension = array_pop(
+            explode('.', $_FILES['coverletter']['name'])
+        );
+        if (strlen($coverletter_extension) > 0) {
+            $coverletter_filename .= '.' . $coverletter_extension;
+        }
+
         // Grab the temporarly files from $_FILES, and put them in our custom directory
         $resume_source = $_FILES['resume']['tmp_name'];
         $resume_dest = trailingslashit($app_dir) . $resume_filename;
@@ -266,7 +278,7 @@ if (!function_exists('ehc_submit_application_form')) {
         $message .=
             "Resume and coverletter (if submitted) are attached to this email.\n";
         $attachments = [$resume_dest];
-        if (!$coverletter_dest) {
+        if ($coverletter_dest) {
             array_push($attachments, $coverletter_dest);
         }
         wp_mail($address, $subject, $message, '', $attachments);
