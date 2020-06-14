@@ -218,14 +218,14 @@ const JobAppModal = ({
         />
         <br />
         <label htmlFor="coverletter">Cover Letter:</label>
-        <input name="coverletter" id="coverletter" type="file" />
-        <br />
         <input
-          type="hidden"
-          name="action"
-          value="submit_jobapp"
+          name="coverletter"
+          id="coverletter"
+          type="file"
           accept=".doc,.docx,.pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
         />
+        <br />
+        <input type="hidden" name="action" value="submit_jobapp" />
         <JobSubmit type="submit" value="Submit" />
       </JobForm>
     </JobModal>

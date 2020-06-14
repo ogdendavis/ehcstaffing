@@ -207,13 +207,14 @@ if (!function_exists('ehc_submit_application_form')) {
         );
 
         // Add correct extensions to filenames
-        $resume_extension = array_pop(explode('.', $_FILES['resume']['name']));
+        $resume_parts = explode('.', $_FILES['resume']['name']);
+        $resume_extension = array_pop($resume_parts);
         if (strlen($resume_extension) > 0) {
             $resume_filename .= '.' . $resume_extension;
         }
-        $coverletter_extension = array_pop(
-            explode('.', $_FILES['coverletter']['name'])
-        );
+
+        $coverletter_parts = explode('.', $_FILES['coverletter']['name']);
+        $coverletter_extension = array_pop($coverletter_parts);
         if (strlen($coverletter_extension) > 0) {
             $coverletter_filename .= '.' . $coverletter_extension;
         }
