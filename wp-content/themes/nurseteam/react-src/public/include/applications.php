@@ -240,22 +240,31 @@ if (!function_exists('ehc_submit_application_form')) {
         wp_insert_post($args);
 
         // Send Marc an email with the application info
-        $address = 'lucasod@gmail.com';
-        $subject = 'App submitted for ' . $job_title;
+        // All the prettier-ignores are to maintain double quotes for text formatting
+        // prettier-ignore
+        $address = "lucasod@gmail.com";
+        // prettier-ignore
+        $subject = "App submitted for " . $job_title;
+        // prettier-ignore
         $message =
-            'An application was submitted by ' .
+            "An application was submitted by " .
             $firstname .
-            ' ' .
+            " " .
             $lastname .
-            'for ' .
+            " for " .
             $job_title .
-            ':';
-        $message .= '\n\n';
-        $message .= 'Applicant Name: ' . $firstname . ' ' . $lastname . '\n';
-        $message .= 'Email: ' . $email . '\n';
-        $message .= 'Phone: ' . $phone . '\n\n';
+            ":";
+        // prettier-ignore
+        $message .= "\n\n";
+        // prettier-ignore
+        $message .= "Applicant Name: " . $firstname . " " . $lastname . "\n";
+        // prettier-ignore
+        $message .= "Email: " . $email . "\n";
+        // prettier-ignore
+        $message .= "Phone: " . $phone . "\n\n";
+        // prettier-ignore
         $message .=
-            'Resume and coverletter (if submitted) are attached to this email.\n';
+            "Resume and coverletter (if submitted) are attached to this email.\n";
         $attachments = [$resume_dest];
         if (!$coverletter_dest) {
             array_push($attachments, $coverletter_dest);
