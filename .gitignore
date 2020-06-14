@@ -10,3 +10,6 @@ uploads
 # Create React App
 wp-content/themes/nurseteam/*
 !wp-content/themes/nurseteam/react-src
+
+# Uploaded job app files
+wp-content/app_uploads/*

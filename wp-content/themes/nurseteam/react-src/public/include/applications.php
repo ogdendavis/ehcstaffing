@@ -100,8 +100,9 @@ if (!function_exists('ehc_add_app_meta')) {
             <div>
               <span class="key">Resume:</span>
               <span class="value">
-                <a href="<?php echo get_template_directory_uri() .
-                    '/uploads/' .
+                <a href="<?php echo trailingslashit(
+                    content_url('/app_uploads')
+                ) .
                     get_post_meta(
                         $post->ID,
                         '_app_resume',
@@ -114,8 +115,9 @@ if (!function_exists('ehc_add_app_meta')) {
             <div>
               <span class="key">Cover Letter:</span>
               <span class="value">
-                <a href="<?php echo get_template_directory_uri() .
-                    '/uploads/' .
+                <a href="<?php echo trailingslashit(
+                    content_url('/app_uploads')
+                ) .
                     get_post_meta(
                         $post->ID,
                         '_app_coverletter',
@@ -189,8 +191,7 @@ if (!function_exists('ehc_submit_application_form')) {
         // Handle file uploads
         // Get the custom application upload directory
 
-        $app_dir =
-            trailingslashit(plugin_dir_path(dirname(__FILE__))) . 'uploads';
+        $app_dir = trailingslashit(WP_CONTENT_DIR) . 'app_uploads';
         // If dir isn't there, make it!
         if (!is_dir($app_dir)) {
             wp_mkdir_p($app_dir);
