@@ -175,6 +175,8 @@ if (!function_exists('ehc_submit_application_form')) {
         $lastname = sanitize_text_field($_REQUEST['lastname']);
         $localid = sanitize_text_field($_REQUEST['localid']);
         $sourceid = sanitize_text_field($_REQUEST['whichJob']);
+        $email = sanitize_email($_REQUEST['email']);
+        $phone = sanitize_text_field($_REQUEST['phone']);
 
         // Use local id to recreate job display title provided in job API
         $job_title =
@@ -209,10 +211,15 @@ if (!function_exists('ehc_submit_application_form')) {
         $resume_dest = trailingslashit($app_dir) . $resume_filename;
         move_uploaded_file($resume_source, $resume_dest);
         $coverletter_source = $_FILES['coverletter']['tmp_name'];
-        $coverletter_dest = trailingslashit($app_dir) . $coverletter_filename;
-        move_uploaded_file($coverletter_source, $coverletter_dest);
+        if (strlen($coverletter_source) > 0) {
+            $coverletter_dest =
+                trailingslashit($app_dir) . $coverletter_filename;
+            move_uploaded_file($coverletter_source, $coverletter_dest);
+        } else {
+            $coverletter_dest = false;
+        }
 
-        // Args for wp_insert_post
+        // Collect args and create the post
         $args = [
             'ID' => 0,
             'post_type' => 'ehc_application',
@@ -220,16 +227,40 @@ if (!function_exists('ehc_submit_application_form')) {
             'meta_input' => [
                 '_app_firstname' => $firstname,
                 '_app_lastname' => $lastname,
-                '_app_email' => sanitize_email($_REQUEST['email']),
-                '_app_phone' => sanitize_text_field($_REQUEST['phone']),
+                '_app_email' => $email,
+                '_app_phone' => $phone,
                 '_app_job_sourceid' => $sourceid,
                 '_app_job_localid' => $localid,
                 '_app_job_display_title' => $job_title,
                 '_app_resume' => $resume_filename,
-                '_app_coverletter' => $coverletter_filename,
+                '_app_coverletter' =>
+                    !$coverletter_dest ?: $coverletter_filename,
             ],
         ];
         wp_insert_post($args);
+
+        // Send Marc an email with the application info
+        $address = 'lucasod@gmail.com';
+        $subject = 'App submitted for ' . $job_title;
+        $message =
+            'An application was submitted by ' .
+            $firstname .
+            ' ' .
+            $lastname .
+            'for ' .
+            $job_title .
+            ':';
+        $message .= '\n\n';
+        $message .= 'Applicant Name: ' . $firstname . ' ' . $lastname . '\n';
+        $message .= 'Email: ' . $email . '\n';
+        $message .= 'Phone: ' . $phone . '\n\n';
+        $message .=
+            'Resume and coverletter (if submitted) are attached to this email.\n';
+        $attachments = [$resume_dest];
+        if (!$coverletter_dest) {
+            array_push($attachments, $coverletter_dest);
+        }
+        wp_mail($address, $subject, $message, '', $attachments);
 
         // Temp reload redirect -- update to success message
         wp_redirect($_SERVER['HTTP_REFERER']);
