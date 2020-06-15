@@ -17,6 +17,13 @@ const JobPageMain = styled.main`
   }
 `;
 
+const SubmissionConfirmation = styled.div`
+  background: ${props => props.theme.secondaryColor};
+  color: ${props => props.theme.bgColor};
+  font-weight: 700;
+  padding: 1rem;
+`;
+
 const Pager = styled.div`
   margin-top: 2rem;
   text-align: center;
@@ -35,6 +42,7 @@ const JobArchive = props => {
   const [filteredJobs, setFilteredJobs] = useState([]);
   const [numJobsVisible, setNumJobsVisible] = useState(10);
   const [visibleJobs, setVisibleJobs] = useState([]);
+  const [isAfterSubmission, setIsAfterSubmission] = useState(false);
 
   // Passed to modal to toggle visibility
   const toggleApply = () => {
@@ -68,6 +76,17 @@ const JobArchive = props => {
   };
 
   useEffect(() => {
+    // Check for params that indicate page was reloaded after app submission
+    function checkIfAfterSubmission() {
+      const s = props.location.search;
+      if (s.length > 0) {
+        const p = new URLSearchParams(s);
+        setIsAfterSubmission(p.get('s') === 'true' ? true : false);
+      }
+    }
+    checkIfAfterSubmission();
+
+    // Get and display jobs!
     async function getJobs() {
       await fetch(`${process.env.REACT_APP_HOME}/wp-json/ehcapi/v1/jobs`)
         .then(res => res.json())
@@ -82,7 +101,7 @@ const JobArchive = props => {
         });
     }
     getJobs();
-  }, []);
+  }, [props.location.search]);
 
   // Simplify job info into an array for the application modal
   const jobsForModal = [];
@@ -103,6 +122,12 @@ const JobArchive = props => {
         <Link to="/contact">send us your info</Link> to be considered for future
         openings, and check this page regularly for new listings.
       </p>
+      {isAfterSubmission && (
+        <SubmissionConfirmation>
+          Thank you for submitting your application. We will review your
+          materials, and get back to you.
+        </SubmissionConfirmation>
+      )}
       <JobFilter allJobs={allJobs} update={updateJobsWithPaging} />
       {visibleJobs.map(job => {
         const startDate = new Intl.DateTimeFormat('en-US').format(

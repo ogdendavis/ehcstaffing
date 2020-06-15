@@ -285,8 +285,10 @@ if (!function_exists('ehc_submit_application_form')) {
         }
         wp_mail($address, $subject, $message, '', $attachments);
 
-        // Temp reload redirect -- update to success message
-        wp_redirect($_SERVER['HTTP_REFERER']);
+        // Reload page with query string indicating form was submitted
+        $from = untrailingslashit($_SERVER['HTTP_REFERER']);
+        $to = strpos($from . '?s=true') !== false ? $from : $from . '?s=true';
+        wp_redirect($to);
         die();
     }
     add_action('admin_post_submit_jobapp', 'ehc_submit_application_form');
