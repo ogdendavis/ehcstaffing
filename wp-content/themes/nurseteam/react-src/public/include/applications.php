@@ -287,7 +287,7 @@ if (!function_exists('ehc_submit_application_form')) {
 
         // Reload page with query string indicating form was submitted
         $from = untrailingslashit($_SERVER['HTTP_REFERER']);
-        $to = strpos($from . '?s=true') !== false ? $from : $from . '?s=true';
+        $to = strpos($from, '?s=true') !== false ? $from : $from . '?s=true';
         wp_redirect($to);
         die();
     }
