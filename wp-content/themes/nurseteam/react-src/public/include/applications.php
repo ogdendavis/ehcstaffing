@@ -337,3 +337,33 @@ if (!function_exists('ehc_add_application_columns')) {
         2
     );
 }
+
+/*
+ * Deletes resume and coverletter when application is deleted
+ */
+if (!function_exists('ehc_delete_app_files')) {
+    function ehc_delete_app_files($postid)
+    {
+        // Early return if deleting anything other than an application
+        global $post_type;
+        if ($post_type !== 'ehc_application') {
+            return;
+        }
+
+        // Get the resume and coverletter meta fields
+        $r = get_post_meta($postid, '_app_resume');
+        $c = get_post_meta($postid, '_app_coverletter');
+
+        // If there's info in the fields, delete the files!
+        if (is_array($r) && strlen($r[0]) > 1) {
+            $rpath = trailingslashit(WP_CONTENT_DIR) . 'app_uploads/' . $r[0];
+            wp_delete_file($rpath);
+        }
+        if (is_array($c) && strlen($c[0]) > 1) {
+            $cpath = trailingslashit(WP_CONTENT_DIR) . 'app_uploads/' . $c[0];
+            wp_delete_file($cpath);
+        }
+    }
+    // before_delete_post only runs when trash is emptied
+    add_action('before_delete_post', 'ehc_delete_app_files');
+}
