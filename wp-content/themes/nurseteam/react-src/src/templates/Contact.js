@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 const ContactPageMain = styled.main`
@@ -48,6 +48,13 @@ const ContactForm = styled.form`
   }
 `;
 
+const SubmissionConfirmation = styled.div`
+  background: ${props => props.theme.secondaryColor};
+  color: ${props => props.theme.bgColor};
+  font-weight: 700;
+  padding: 1rem;
+`;
+
 // Styles copied from Button component
 const ContactSubmit = styled.input`
   cursor: pointer;
@@ -66,6 +73,19 @@ const ContactSubmit = styled.input`
 `;
 
 const Contact = props => {
+  const [isAfterSubmission, setIsAfterSubmission] = useState(false);
+  useEffect(() => {
+    // Check for params that indicate page was reloaded after form submission
+    function checkIfAfterSubmission() {
+      const s = props.location.search;
+      if (s.length > 0) {
+        const p = new URLSearchParams(s);
+        setIsAfterSubmission(p.get('s') === 'true' ? true : false);
+      }
+    }
+    checkIfAfterSubmission();
+  }, [props.location.search]);
+
   return (
     <ContactPageMain>
       <div>
@@ -74,25 +94,32 @@ const Contact = props => {
           Have a question, or want us to keep you in mind for future travel
           nurse openings? Let us know!
         </p>
+        {isAfterSubmission && (
+          <SubmissionConfirmation>
+            Thank you for your message. We will get back to you as soon as we
+            are able.
+          </SubmissionConfirmation>
+        )}
       </div>
       <ContactForm
         action={process.env.REACT_APP_HOME + '/wp-admin/admin-post.php'}
         method="POST"
+        encType="multipart/form-data"
       >
         <label htmlFor="firstname">First Name:</label>
-        <input name="firstname" id="firstname" />
+        <input name="firstname" id="firstname" required />
         <br />
         <label htmlFor="lastname">Last Name:</label>
-        <input name="lastname" id="lastname" />
+        <input name="lastname" id="lastname" required />
         <br />
         <label htmlFor="email">Email:</label>
-        <input name="email" id="email" type="email" />
+        <input name="email" id="email" type="email" required />
         <br />
         <label htmlFor="phone">Phone:</label>
         <input name="phone" id="phone" type="tel" />
         <br />
         <label htmlFor="message">Message:</label>
-        <textarea name="message" id="message" />
+        <textarea name="message" id="message" required />
         <br />
         <label htmlFor="resume">Resume:</label>
         <input name="resume" id="resume" type="file" />
