@@ -288,6 +288,10 @@ if (!function_exists('ehc_submit_application_form')) {
         die();
     }
     add_action('admin_post_submit_jobapp', 'ehc_submit_application_form');
+    add_action(
+        'admin_post_nopriv_submit_jobapp',
+        'ehc_submit_application_form'
+    );
 }
 
 /*
