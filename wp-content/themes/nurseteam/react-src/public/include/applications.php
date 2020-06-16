@@ -137,13 +137,9 @@ if (!function_exists('ehc_add_app_meta')) {
  * user-submitted
  */
 if (!function_exists('ehc_hide_add_app_buttons')) {
+    // Removes add app button for all users, including admin
     function ehc_hide_add_app_buttons()
     {
-        $user = wp_get_current_user();
-        $role = $user->roles[0];
-        // if ($role === 'administrator') {
-        //     return;
-        // }
         // Remove from admin sidebar
         global $submenu;
         unset($submenu['edit.php?post_type=ehc_application'][10]);
