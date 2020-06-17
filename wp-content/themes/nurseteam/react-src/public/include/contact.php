@@ -48,7 +48,7 @@ if (!function_exists('ehc_handle_contact_submission')) {
         // prettier-ignore
         $subject = "Contact form submission from " . $firstname . " " . $lastname;
         // prettier-ignore
-        $body = "A message has been sent from " . $firstname . " " . $lastname . ".";
+        $body = "A message has been sent from " . $firstname . " " . $lastname . ":";
         // prettier-ignore
         $body .= "\n\n";
         $body .= $message;

@@ -11,8 +11,7 @@ const Hero = styled.div`
       rgba(255, 255, 255, 0) 50%,
       rgba(255, 255, 255, 0.5)
     ),
-    url(${process.env.PUBLIC_URL + '/assets/PROPOSEDhero1.png'}) left/cover
-      no-repeat;
+    url(${process.env.PUBLIC_URL + '/assets/hero.jpg'}) left/cover no-repeat;
   position: relative;
 
   div {
@@ -130,7 +129,7 @@ const Home = props => {
         </div>
         <div className="image-container">
           <img
-            src={process.env.PUBLIC_URL + '/assets/PROPOSEDhomepage1.png'}
+            src={process.env.PUBLIC_URL + '/assets/homepage1.jpg'}
             alt="Group of nurses"
           />
         </div>
@@ -138,7 +137,7 @@ const Home = props => {
       <Section centered={true}>
         <div className="image-container">
           <img
-            src={process.env.PUBLIC_URL + '/assets/PROPOSEDhomepage2.png'}
+            src={process.env.PUBLIC_URL + '/assets/homepage2.jpg'}
             alt="Nurse and doctor conferring"
           />
         </div>
