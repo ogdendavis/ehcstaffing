@@ -16,7 +16,7 @@ if (!function_exists('ehc_handle_contact_submission')) {
 
         // Only deal with resume if user has attached it!
         $has_attachment = false;
-        if ($_FILES['resume']['error'] !== 0) {
+        if ($_FILES['resume']['error'] === 0) {
             $has_attachment = true;
 
             $resume_dir = trailingslashit(WP_CONTENT_DIR) . 'contact_uploads';

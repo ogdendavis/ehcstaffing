@@ -13,3 +13,4 @@ wp-content/themes/nurseteam/*
 
 # Uploaded job app files
 wp-content/app_uploads/*
+wp-content/contact_uploads/*
