@@ -67,35 +67,76 @@ if (!function_exists('ehc_add_job_meta')) {
         );
         // HTML output below
         ?>
+          <style>
+            .ehc_job_info table td {
+              padding-bottom: 0.5rem;
+            }
+          </style>
           <div class="ehc_job_info">
-            Source ID: <input type="text" name="sourceid" value="<?php echo $saved_sourceid; ?>" />
-            City: <input type="text" name="city" value="<?php echo $saved_city; ?>" />
-            State:
-            <select name="state" value="<?php echo $saved_state; ?>">
-              <?php foreach ($states as $state) {
-                  echo '<option value="' .
-                      $state->abbreviaton .
-                      '">' .
-                      $state->name .
-                      '</option>';
-              } ?>
-            </select>
-            Start Date: <input type="date" name="startdate" value="<?php echo $saved_startdate; ?>" />
-            Duration: <input type="text" name="duration" value="<?php echo $saved_duration; ?>" />
-            Specialty:
-            <select name="specialty" value="<?php echo $saved_specialty; ?>">
-              <?php foreach ($specialties as $specialty) {
-                  echo '<option value="' .
-                      $specialty->name .
-                      '">' .
-                      $specialty->name .
-                      '</option>';
-              } ?>
-            </select>
-            Unit: <input type="text" name="unit" value="<?php echo $saved_unit; ?>" />
-            Shift: <input type="text" name="shift" value="<?php echo $saved_shift; ?>" />
-            Pay Info: <textarea name="pay"><?php echo $saved_pay; ?></textarea>
-            Description: <textarea name="description"><?php echo $saved_description; ?></textarea>
+            <table>
+              <tbody>
+                <tr>
+                  <td>Source ID:</td>
+                  <td><input type="text" name="sourceid" value="<?php echo $saved_sourceid; ?>" /></td>
+                </tr>
+                <tr>
+                  <td>City:</td>
+                  <td><input type="text" name="city" value="<?php echo $saved_city; ?>" /></td>
+                </tr>
+                <tr>
+                  <td>State:</td>
+                  <td>
+                    <select name="state" value="<?php echo $saved_state; ?>">
+                      <?php foreach ($states as $state) {
+                          echo '<option value="' .
+                              $state->abbreviaton .
+                              '">' .
+                              $state->name .
+                              '</option>';
+                      } ?>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Start Date:</td>
+                  <td><input type="date" name="startdate" value="<?php echo $saved_startdate; ?>" /></td>
+                </tr>
+                <tr>
+                  <td>Duration:</td>
+                  <td><input type="text" name="duration" value="<?php echo $saved_duration; ?>" /></td>
+                </tr>
+                <tr>
+                  <td>Specialty:</td>
+                  <td>
+                    <select name="specialty" value="<?php echo $saved_specialty; ?>">
+                      <?php foreach ($specialties as $specialty) {
+                          echo '<option value="' .
+                              $specialty->name .
+                              '">' .
+                              $specialty->name .
+                              '</option>';
+                      } ?>
+                    </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Unit:</td>
+                  <td><input type="text" name="unit" value="<?php echo $saved_unit; ?>" /></td>
+                </tr>
+                <tr>
+                  <td>Shift:</td>
+                  <td><input type="text" name="shift" value="<?php echo $saved_shift; ?>" /></td>
+                </tr>
+                <tr>
+                  <td>Pay Info:</td>
+                  <td><textarea name="pay"><?php echo $saved_pay; ?></textarea></td>
+                </tr>
+                <tr>
+                  <td>Description:</td>
+                  <td><textarea name="description"><?php echo $saved_description; ?></textarea></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
 
         <?php
