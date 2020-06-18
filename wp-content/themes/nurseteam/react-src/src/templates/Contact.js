@@ -122,7 +122,12 @@ const Contact = props => {
         <textarea name="message" id="message" required />
         <br />
         <label htmlFor="resume">Resume:</label>
-        <input name="resume" id="resume" type="file" />
+        <input
+          name="resume"
+          id="resume"
+          type="file"
+          accept=".doc,.docx,.pdf, application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf"
+        />
         <br />
         <span>
           (Only attach a resume if you wish to have it kept on file for future
