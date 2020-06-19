@@ -44,7 +44,7 @@ if (!function_exists('ehc_handle_contact_submission')) {
         // Build the email
         // All the prettier-ignores are to maintain double quotes for text formatting
         // prettier-ignore
-        $address = "lucasod@gmail.com";
+        $address = "marc@nurseteam.net";
         // prettier-ignore
         $subject = "Contact form submission from " . $firstname . " " . $lastname;
         // prettier-ignore

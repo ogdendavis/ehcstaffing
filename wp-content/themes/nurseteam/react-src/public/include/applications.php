@@ -252,7 +252,7 @@ if (!function_exists('ehc_submit_application_form')) {
         // Send Marc an email with the application info
         // All the prettier-ignores are to maintain double quotes for text formatting
         // prettier-ignore
-        $address = "lucasod@gmail.com";
+        $address = "marc@nurseteam.net";
         // prettier-ignore
         $subject = "App submitted for " . $job_title;
         // prettier-ignore
