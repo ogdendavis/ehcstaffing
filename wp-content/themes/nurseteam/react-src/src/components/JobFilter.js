@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Select from 'react-select';
 
 import Opener from './Opener';
-import Button from './Button';
 
 // JSON list of states
 import States from '../assets/states';
@@ -31,17 +31,24 @@ const SortUpper = styled.div`
 const SortOptions = styled.div`
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.5s ease;
+  opacity: 0;
+  transition: max-height 0.5s ease, opacity 0.5s ease 0.1s;
   display: flex;
   flex-flow: row wrap;
   justify-content: flex-start;
   align-items: flex-end;
 
-  &.open {
-    max-height: 100vh;
+  @media only screen and (max-width: 640px) {
+    justify-content: center;
   }
 
-  div {
+  &.open {
+    max-height: 100vh;
+    opacity: 1;
+    overflow: visible;
+  }
+
+  .jobsortrow {
     padding: 1rem;
   }
 
@@ -53,11 +60,16 @@ const SortOptions = styled.div`
     font-size: 1.1rem;
   }
 
-  select {
-    cursor: pointer;
+  .ehc-select {
+    min-width: 220px;
     padding: 0 0.5rem;
 
+    .ehc-select__menu {
+      color: #333333;
+    }
+
     option {
+      cursor: pointer;
       transition: all 0.25s ease;
     }
     option.option--all {
@@ -67,87 +79,82 @@ const SortOptions = styled.div`
   }
 `;
 
-const SortButtons = styled.div`
-  display: flex;
-  flex-flow: row wrap;
+const stateOptions = States.map(state => ({
+  value: state.abbreviation,
+  label: state.name,
+}));
+stateOptions.unshift({
+  value: 'ALL',
+  label: 'All States',
+});
 
-  button {
-    cursor: pointer;
-  }
-  button:first-child {
-    margin-right: 1rem;
-  }
-`;
-
-const pickStates = States.map(state => (
-  <option key={`pick${state.abbreviation}`} value={state.abbreviation}>
-    {state.name}
-  </option>
-));
-
-const pickSpecialties = Specialties.map(sp => (
-  <option key={`pick ${sp.name}`} value={sp.name}>
-    {sp.name}
-  </option>
-));
+const specialtyOptions = Specialties.map(sp => ({
+  value: sp.name,
+  label: sp.name,
+}));
+specialtyOptions.unshift({
+  value: 'ALL',
+  label: 'All Specialties',
+});
 
 const JobFilter = ({ allJobs, update }) => {
   const [open, setOpen] = useState(false);
-  const [selectedStates, setSelectedStates] = useState([]);
-  const [selectedSpecs, setSelectedSpecs] = useState([]);
+  const [selectedStates, setSelectedStates] = useState(['ALL']);
+  const [selectedSpecs, setSelectedSpecs] = useState(['ALL']);
 
-  // Fired by click event
-  const getSelectedStates = ev => {
-    ev.stopPropagation();
-    ev.nativeEvent.stopImmediatePropagation();
-    if (!selectedStates.includes(ev.target.value)) {
-      setSelectedStates(selectedStates.concat(ev.target.value));
-    } else {
-      setSelectedStates(selectedStates.filter(st => st !== ev.target.value));
-    }
-  };
+  useEffect(() => {
+    function filterJobs(aj) {
+      // Check if filtering by state and/or specialty
+      const filterByState = !(
+        selectedStates.includes('ALL') || selectedStates.length === 0
+      );
+      const filterBySpec = !(
+        selectedSpecs.includes('ALL') || selectedSpecs.length === 0
+      );
 
-  const getSelectedSpecs = ev => {
-    ev.stopPropagation();
-    ev.nativeEvent.stopImmediatePropagation();
-    if (!selectedSpecs.includes(ev.target.value)) {
-      setSelectedSpecs(selectedSpecs.concat(ev.target.value));
-    } else {
-      setSelectedSpecs(selectedSpecs.filter(sp => sp !== ev.target.value));
-    }
-  };
-
-  const filterJobs = () => {
-    // Check if filtering by state and/or specialty
-    const filterByState = !(
-      selectedStates.includes('ALL') || selectedStates.length === 0
-    );
-    const filterBySpec = !(
-      selectedSpecs.includes('ALL') || selectedSpecs.length === 0
-    );
-
-    if (!filterByState && !filterBySpec) {
-      // No filtering
-      update(allJobs);
-    } else {
-      // Filter by each -- if only filtering by one, will include all values of other
-      let filtered = allJobs.slice();
-      if (filterByState) {
-        filtered = filtered.filter(job => selectedStates.includes(job.state));
+      if (!filterByState && !filterBySpec) {
+        // No filtering
+        update(aj);
+      } else {
+        // Filter by each -- if only filtering by one, will include all values of other
+        let filtered = aj.slice();
+        if (filterByState) {
+          filtered = filtered.filter(job => selectedStates.includes(job.state));
+        }
+        if (filterBySpec) {
+          filtered = filtered.filter(job =>
+            selectedSpecs.includes(job.specialty)
+          );
+        }
+        update(filtered);
       }
-      if (filterBySpec) {
-        filtered = filtered.filter(job =>
-          selectedSpecs.includes(job.specialty)
-        );
-      }
-      update(filtered);
+    }
+    filterJobs(allJobs);
+  }, [update, allJobs, selectedStates, selectedSpecs]);
+
+  // Fired by onChange event
+  // React-select just sends an array of objects with the value & lable of the
+  // selected options, not the whole event
+  const getSelectedStates = sel => {
+    // react-select sends null if no items are selected. handle that!
+    if (sel === null) {
+      setSelectedStates(['ALL']);
+    } else {
+      // Pull the values out of the objects in the react-select generated array,
+      // and use them to set the state
+      const newStates = sel.map(st => st.value);
+      setSelectedStates(newStates);
     }
   };
 
-  const showAllJobs = () => {
-    setSelectedStates([]);
-    setSelectedSpecs([]);
-    update(allJobs);
+  const getSelectedSpecs = sel => {
+    // Same logic as getSelectedStates
+    if (sel === null) {
+      setSelectedSpecs(['ALL']);
+    } else {
+      const newSpecs = sel.map(sp => sp.value);
+      setSelectedSpecs(newSpecs);
+    }
   };
 
   return (
@@ -157,42 +164,28 @@ const JobFilter = ({ allJobs, update }) => {
         <Opener open={open} addClass="job-filter-arrow" />
       </SortUpper>
       <SortOptions className={open ? 'open' : ''}>
-        <div>
+        <div className="jobsortrow">
           <label htmlFor="states">State</label>
-          <select
-            name="states"
-            id="states"
-            value={selectedStates}
-            onChange={() => console.log('change state')}
-            onClick={getSelectedStates}
-            multiple
-          >
-            <option value="ALL" className="option--all">
-              All States
-            </option>
-            {pickStates}
-          </select>
+          <Select
+            options={stateOptions}
+            onChange={s => getSelectedStates(s)}
+            closeMenuOnSelect={false}
+            isMulti
+            className="ehc-select"
+            classNamePrefix="ehc-select"
+          />
         </div>
-        <div>
+        <div className="jobsortrow">
           <label htmlFor="specialties">Specialty</label>
-          <select
-            name="specialties"
-            id="specialties"
-            value={selectedSpecs}
-            onChange={() => console.log('change specialty')}
-            onClick={getSelectedSpecs}
-            multiple
-          >
-            <option value="ALL" className="option--all">
-              All Specialties
-            </option>
-            {pickSpecialties}
-          </select>
+          <Select
+            options={specialtyOptions}
+            onChange={s => getSelectedSpecs(s)}
+            closeMenuOnSelect={false}
+            isMulti
+            className="ehc-select"
+            classNamePrefix="ehc-select"
+          />
         </div>
-        <SortButtons>
-          <Button text="Filter" inactive={true} handleClick={filterJobs} />
-          <Button text="Show All" inactive={true} handleClick={showAllJobs} />
-        </SortButtons>
       </SortOptions>
     </SortContainer>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 
@@ -56,10 +56,11 @@ const JobArchive = props => {
   };
 
   // Passed to JobFilter to handle filtering and paging together
-  const updateJobsWithPaging = j => {
+  const updateJobsWithPaging = useCallback(j => {
     setFilteredJobs(j);
     doPaging({ fj: j, reset: true });
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Pass filtered jobs in, get paged jobs out!
   // Used to load more jobs with "more" button at bottom of page
