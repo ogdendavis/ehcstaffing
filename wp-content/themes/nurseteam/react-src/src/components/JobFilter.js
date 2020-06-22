@@ -54,6 +54,7 @@ const SortOptions = styled.div`
   }
 
   select {
+    cursor: pointer;
     padding: 0 0.5rem;
 
     option {
