@@ -131,9 +131,10 @@ const JobArchive = props => {
       )}
       <JobFilter allJobs={allJobs} update={updateJobsWithPaging} />
       {visibleJobs.map(job => {
-        const startDate = new Intl.DateTimeFormat('en-US').format(
-          new Date(job.startdate)
-        );
+        const startDate =
+          job.startdate.length === 0 || job.startdate === 'ASAP'
+            ? 'ASAP'
+            : new Intl.DateTimeFormat('en-US').format(new Date(job.startdate));
         job.startdate = startDate;
 
         return (
