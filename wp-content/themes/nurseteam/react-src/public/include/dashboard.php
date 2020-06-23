@@ -49,7 +49,6 @@ if (!function_exists('ehc_add_dashboard_widgets')) {
     add_action('wp_dashboard_setup', 'ehc_add_dashboard_widgets');
 
     // Helper functions to echo the markup for the new widgets
-    // TODO: Make these actually do something! They're just dumb HTML, right now
     function ehc_build_add_job_widget()
     {
         // Action of form submission handled by ehc_add_job_from_dashboard function
@@ -132,7 +131,7 @@ if (!function_exists('ehc_add_dashboard_widgets')) {
             text-align:left;
           }
         </style>
-        <input class="button button-primary" type="submit" name="delete-jobs" value="Delete selected" />
+        <input class="button button-primary" type="submit" name="add-job" value="Delete selected" />
         <table class="deleteJobs">
           <tr>
             <th></th>

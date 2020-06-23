@@ -12,3 +12,5 @@ require_once __DIR__ . '/include/contact.php';
 require_once __DIR__ . '/include/applications.php';
 // Create endpoint to get all content (inc custom fields) for homepage
 require_once __DIR__ . '/include/api_homepage.php';
+// Upload job file to static location for wp-upload-all script
+require_once __DIR__ . '/include/upload_jobfile.php';
