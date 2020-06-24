@@ -75,7 +75,7 @@ if (!function_exists('ehc_get_jobs')) {
 
         // Add title for consistent display in job listings and submission form
         $simplified['display_title'] =
-            $simplified['pay'] .
+            $simplified['specialty'] .
             ' in ' .
             $simplified['city'] .
             ', ' .
