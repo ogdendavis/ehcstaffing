@@ -79,6 +79,7 @@ const SortOptions = styled.div`
   }
 `;
 
+// State list is static, and already in alpha order
 const stateOptions = States.map(state => ({
   value: state.abbreviation,
   label: state.name,
@@ -88,10 +89,13 @@ stateOptions.unshift({
   label: 'All States',
 });
 
+// We might add & remove specialties, so dynamically make sure it's in alpha order
 const specialtyOptions = Specialties.map(sp => ({
   value: sp.name,
   label: sp.name,
 }));
+// Lazy sorting -- only works if all specialties start with capital letter
+specialtyOptions.sort((a, b) => a.name < b.name);
 specialtyOptions.unshift({
   value: 'ALL',
   label: 'All Specialties',

@@ -72,6 +72,18 @@
   {
     "name": "RRT"
   },
+  {
+    "name": "OR Scrub Tech"
+  },
+  {
+    "name": "OR Tech"
+  },
+  {
+    "name": "PACU"
+  },
+  {
+    "name": "Pathologist Assistant"
+  },
 
   {
     "name": "PED RN"
@@ -87,16 +99,7 @@
     "name": "Psych"
   },
   {
-    "name": "OR Scrub Tech"
-  },
-  {
-    "name": "OR Tech"
-  },
-  {
-    "name": "PACU"
-  },
-  {
-    "name": "Pathologist Assistant"
+    "name": "Psych RN"
   },
   {
     "name": "ICU"

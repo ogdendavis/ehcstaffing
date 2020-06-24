@@ -65,6 +65,12 @@ if (!function_exists('ehc_add_job_meta')) {
         $specialties = json_decode(
             file_get_contents(__DIR__ . '/specialties.json')
         );
+        // Put specialties in alphabetical order
+        function sortSpecs($a, $b)
+        {
+            return strcmp($a->name, $b->name);
+        }
+        usort($specialties, 'sortSpecs');
         // HTML output below
         ?>
           <style>
@@ -151,7 +157,7 @@ if (!function_exists('ehc_add_job_meta')) {
             </table>
           </div>
 
-        <?php 
+        <?php
     }
 
     // Store data from meta box on job post save
