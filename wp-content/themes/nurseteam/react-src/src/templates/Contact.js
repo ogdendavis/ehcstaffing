@@ -74,6 +74,8 @@ const ContactSubmit = styled.input`
 
 const Contact = props => {
   const [isAfterSubmission, setIsAfterSubmission] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+
   useEffect(() => {
     // Check for params that indicate page was reloaded after form submission
     function checkIfAfterSubmission() {
@@ -85,6 +87,26 @@ const Contact = props => {
     }
     checkIfAfterSubmission();
   }, [props.location.search]);
+
+  const formatPhoneNumber = ev => {
+    let v = ev.target.value;
+    // If the value in the input is already in our format, get outta here!
+    if (/\(\d{3}\) \d{3}-\d{4}/.test(v)) {
+      return;
+    }
+
+    // Get just the digits from the entered value
+    const cleaned = ('' + v).replace(/\D/g, '');
+    // Split it into pieces
+    const match = cleaned.match(/^(\d{3})(\d{3})(\d{4})$/);
+    // If we have pieces, construct the formatted number
+    // If not, update the value until we get there
+    if (match) {
+      setPhoneNumber('(' + match[1] + ') ' + match[2] + '-' + match[3]);
+    } else {
+      setPhoneNumber(v);
+    }
+  };
 
   return (
     <ContactPageMain>
@@ -116,7 +138,15 @@ const Contact = props => {
         <input name="email" id="email" type="email" required />
         <br />
         <label htmlFor="phone">Phone:</label>
-        <input name="phone" id="phone" type="tel" />
+        <input
+          value={phoneNumber}
+          name="phone"
+          id="phone"
+          type="tel"
+          title="(999) 999-9999"
+          pattern="\([0-9]{3}\) [0-9]{3}-[0-9]{4}"
+          onChange={formatPhoneNumber}
+        />
         <br />
         <label htmlFor="message">Message:</label>
         <textarea name="message" id="message" required />
