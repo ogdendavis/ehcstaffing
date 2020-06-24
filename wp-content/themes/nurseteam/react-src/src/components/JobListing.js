@@ -67,7 +67,6 @@ const JobListing = ({ job, handleButtonClick }) => {
       <InsidePage className={open ? 'open' : ''}>
         <div className="inside__inner">
           <p>{job.pay}</p>
-          <p>{job.description}</p>
         </div>
       </InsidePage>
       <Button
