@@ -140,7 +140,7 @@ const JobArchive = props => {
         return (
           <JobListing
             job={job}
-            key={`${job.city}-${job.startdate}`}
+            key={`${job.sourceid}-listing`}
             handleButtonClick={handleButtonClick}
           />
         );

@@ -168,7 +168,7 @@ const JobFilter = ({ allJobs, update }) => {
           <label htmlFor="states">State</label>
           <Select
             options={stateOptions}
-            onChange={s => getSelectedStates(s)}
+            onChange={getSelectedStates}
             closeMenuOnSelect={false}
             isMulti
             className="ehc-select"
@@ -179,7 +179,7 @@ const JobFilter = ({ allJobs, update }) => {
           <label htmlFor="specialties">Specialty</label>
           <Select
             options={specialtyOptions}
-            onChange={s => getSelectedSpecs(s)}
+            onChange={getSelectedSpecs}
             closeMenuOnSelect={false}
             isMulti
             className="ehc-select"
