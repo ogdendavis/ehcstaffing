@@ -1,20 +1,21 @@
 <?php
 /*
- * Create endpoint to return homepage content
+ * Create endpoint to return contact page content
  */
 
-if (!function_exists('ehc_get_homepage_content')) {
-    function ehc_get_homepage_content()
+if (!function_exists('ehc_get_contactpage_content')) {
+    function ehc_get_contactpage_content()
     {
-        // Get body content of homepage
-        $h_page = get_page_by_path('home');
-        $h_content = $h_page->post_content;
-        $h_id = $h_page->ID;
+        // Get body content and ID of contact page
+        $c_page = get_page_by_path('get-in-touch-page');
+
+        $c_content = $c_page->post_content;
+        $c_id = $c_page->ID;
 
         // Get meta, remove 'hidden' meta (leading underscore in key)
-        $h_meta = get_post_meta($h_id);
+        $c_meta = get_post_meta($c_id);
         $filtered_meta = array_filter(
-            $h_meta,
+            $c_meta,
             function ($k) {
                 return $k[0] !== '_';
             },
@@ -27,13 +28,13 @@ if (!function_exists('ehc_get_homepage_content')) {
         }
 
         // Add page content and return
-        $filtered_meta['page_body'] = $h_content;
+        $filtered_meta['page_body'] = $c_content;
         return $filtered_meta;
     }
     add_action('rest_api_init', function () {
-        register_rest_route('ehcapi/v1', '/homepage', [
+        register_rest_route('ehcapi/v1', '/contactpage', [
             'methods' => 'GET',
-            'callback' => 'ehc_get_homepage_content',
+            'callback' => 'ehc_get_contactpage_content',
         ]);
     });
 }

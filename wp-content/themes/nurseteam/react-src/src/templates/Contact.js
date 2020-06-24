@@ -72,12 +72,22 @@ const ContactSubmit = styled.input`
   }
 `;
 
+const ContactInfo = styled.div`
+  margin: 2rem 0;
+  text-align: center;
+
+  p {
+    margin: 0.5rem;
+  }
+`;
+
 const Contact = props => {
   const [isAfterSubmission, setIsAfterSubmission] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [page, setPage] = useState(false);
 
+  // Check for params that indicate page was reloaded after form submission
   useEffect(() => {
-    // Check for params that indicate page was reloaded after form submission
     function checkIfAfterSubmission() {
       const s = props.location.search;
       if (s.length > 0) {
@@ -87,6 +97,19 @@ const Contact = props => {
     }
     checkIfAfterSubmission();
   }, [props.location.search]);
+
+  // Get page data on initial load
+  useEffect(() => {
+    async function getContactPage() {
+      await fetch(`${process.env.REACT_APP_HOME}/wp-json/ehcapi/v1/contactpage`)
+        .then(res => res.json())
+        .then(j => {
+          console.log(j);
+          setPage(j);
+        });
+    }
+    getContactPage();
+  }, []);
 
   const formatPhoneNumber = ev => {
     let v = ev.target.value;
@@ -112,10 +135,7 @@ const Contact = props => {
     <ContactPageMain>
       <div>
         <h1>Get In Touch</h1>
-        <p>
-          Have a question, or want us to keep you in mind for future travel
-          nurse openings? Let us know!
-        </p>
+        {page && <div dangerouslySetInnerHTML={{ __html: page.page_body }} />}
         {isAfterSubmission && (
           <SubmissionConfirmation>
             Thank you for your message. We will get back to you as soon as we
@@ -168,6 +188,11 @@ const Contact = props => {
         <br />
         <ContactSubmit type="submit" value="Send" />
       </ContactForm>
+      <ContactInfo>
+        <p>{page.contact_name}</p>
+        <p>{page.contact_email}</p>
+        <p>{page.contact_phone}</p>
+      </ContactInfo>
     </ContactPageMain>
   );
 };

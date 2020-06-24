@@ -14,3 +14,5 @@ require_once __DIR__ . '/include/applications.php';
 require_once __DIR__ . '/include/api_homepage.php';
 // Upload job file to static location for wp-upload-all script
 require_once __DIR__ . '/include/upload_jobfile.php';
+// Add endpoint for contact page content
+require_once __DIR__ . '/include/api_contactpage.php';
