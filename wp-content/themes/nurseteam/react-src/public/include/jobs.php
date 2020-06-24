@@ -86,11 +86,17 @@ if (!function_exists('ehc_add_job_meta')) {
                 <tr>
                   <td>State:</td>
                   <td>
-                    <select name="state" value="<?php echo $saved_state; ?>">
+                    <select name="state">
                       <?php foreach ($states as $state) {
+                          $is_selected_state =
+                              $saved_state == $state->abbreviation
+                                  ? ' selected '
+                                  : '';
                           echo '<option value="' .
-                              $state->abbreviaton .
-                              '">' .
+                              $state->abbreviation .
+                              '"' .
+                              $is_selected_state .
+                              '>' .
                               $state->name .
                               '</option>';
                       } ?>
@@ -108,11 +114,17 @@ if (!function_exists('ehc_add_job_meta')) {
                 <tr>
                   <td>Specialty:</td>
                   <td>
-                    <select name="specialty" value="<?php echo $saved_specialty; ?>">
+                    <select name="specialty">
                       <?php foreach ($specialties as $specialty) {
+                          $is_selected_specialty =
+                              $saved_specialty == $specialty->name
+                                  ? ' selected '
+                                  : '';
                           echo '<option value="' .
                               $specialty->name .
-                              '">' .
+                              '"' .
+                              $is_selected_specialty .
+                              '>' .
                               $specialty->name .
                               '</option>';
                       } ?>
@@ -139,7 +151,7 @@ if (!function_exists('ehc_add_job_meta')) {
             </table>
           </div>
 
-        <?php
+        <?php 
     }
 
     // Store data from meta box on job post save
