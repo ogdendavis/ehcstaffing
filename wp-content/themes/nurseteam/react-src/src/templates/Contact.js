@@ -104,7 +104,6 @@ const Contact = props => {
       await fetch(`${process.env.REACT_APP_HOME}/wp-json/ehcapi/v1/contactpage`)
         .then(res => res.json())
         .then(j => {
-          console.log(j);
           setPage(j);
         });
     }
