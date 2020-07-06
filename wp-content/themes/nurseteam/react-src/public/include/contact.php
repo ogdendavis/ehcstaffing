@@ -51,6 +51,12 @@ if (!function_exists('ehc_handle_contact_submission')) {
         $body = "A message has been sent from " . $firstname . " " . $lastname . ":";
         // prettier-ignore
         $body .= "\n\n";
+        // prettier-ignore
+        $body .= "Phone: " . $phone . "\n";
+        // prettier-ignore
+        $body .= "Email: " . $email . "\n\n";
+        // prettier-ignore
+        $body .= "Message:\n";
         $body .= $message;
         $attachment = $has_attachment ? [$resume_dest] : [];
         wp_mail($address, $subject, $body, '', $attachment);
