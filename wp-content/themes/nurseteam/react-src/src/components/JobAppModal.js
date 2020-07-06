@@ -121,18 +121,18 @@ const JobAppModal = ({
   };
 
   const handleJobChange = ev => {
-    const targetJob = jobs.filter(
-      j => Number(j.sourceid) === Number(ev.target.value)
+    const targetJob = jobs.find(
+      j => j.sourceid.toString() === ev.target.value.toString()
     );
-    setSelectedJobLocalId(targetJob[0].localid);
+    setSelectedJobLocalId(targetJob.localid);
   };
 
   useEffect(() => {
     function setInitialLocalJobId() {
-      const targetJob = jobs.filter(
-        j => Number(j.sourceid) === Number(selectedJob)
+      const targetJob = jobs.find(
+        j => j.sourceid.toString() === selectedJob.toString()
       );
-      setSelectedJobLocalId(targetJob[0].localid);
+      setSelectedJobLocalId(targetJob.localid);
     }
     setInitialLocalJobId();
   }, [jobs, selectedJob]);
