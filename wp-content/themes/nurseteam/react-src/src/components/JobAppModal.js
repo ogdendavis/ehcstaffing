@@ -108,6 +108,7 @@ const JobAppModal = ({
   setInfo,
 }) => {
   const [selectedJobLocalId, setSelectedJobLocalId] = useState(0);
+  const [selectedJobDisplayTitle, setSelectedJobDisplayTitle] = useState('');
 
   const handleClick = ev => {
     if (ev.target.id === 'jobModal' || ev.target.id === 'closer') {
@@ -125,6 +126,7 @@ const JobAppModal = ({
       j => j.sourceid.toString() === ev.target.value.toString()
     );
     setSelectedJobLocalId(targetJob.localid);
+    setSelectedJobDisplayTitle(targetJob.display_title);
   };
 
   useEffect(() => {
@@ -133,6 +135,7 @@ const JobAppModal = ({
         j => j.sourceid.toString() === selectedJob.toString()
       );
       setSelectedJobLocalId(targetJob.localid);
+      setSelectedJobDisplayTitle(targetJob.display_title);
     }
     setInitialLocalJobId();
   }, [jobs, selectedJob]);
@@ -203,6 +206,7 @@ const JobAppModal = ({
           })}
         </select>
         <input type="hidden" name="localid" value={selectedJobLocalId} />
+        <input type="hidden" name="displayTitle" value={selectedJobDisplayTitle} />
         <br />
         <p>
           Please upload resume and coverletter (optional) as .doc, .docx, or

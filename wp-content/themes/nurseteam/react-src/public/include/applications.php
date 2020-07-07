@@ -175,14 +175,7 @@ if (!function_exists('ehc_submit_application_form')) {
         $sourceid = sanitize_text_field($_REQUEST['whichJob']);
         $email = sanitize_email($_REQUEST['email']);
         $phone = sanitize_text_field($_REQUEST['phone']);
-
-        // Use local id to recreate job display title provided in job API
-        $job_title =
-            get_post_meta($localid, '_job_specialty', true) .
-            ' in ' .
-            get_post_meta($localid, '_job_city', true) .
-            ', ' .
-            get_post_meta($localid, '_job_state', true);
+        $job_title = sanitize_text_field($_REQUEST['displayTitle']);
 
         // Handle file uploads
         // Get the custom application upload directory
