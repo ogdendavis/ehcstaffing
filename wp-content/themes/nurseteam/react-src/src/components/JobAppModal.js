@@ -21,6 +21,8 @@ const JobForm = styled.form`
   background: #f7f7f7;
   padding: 2rem;
   position: relative;
+  max-width: 100vw;
+  box-sizing: border-box;
 
   h2 {
     margin-top: 0;
@@ -30,6 +32,10 @@ const JobForm = styled.form`
     display: inline-block;
     width: 8rem;
     margin-bottom: 1rem;
+  }
+
+  select {
+    max-width: 100%;
   }
 
   p {
