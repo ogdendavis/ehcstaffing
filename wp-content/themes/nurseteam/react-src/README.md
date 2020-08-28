@@ -1,3 +1,15 @@
+## To dev & deploy
+
+* Make sure MAMP (or equiv.) is up & running
+* To run dev server, run `npm start` from react-src folder
+* When done, run `npm run build` from react-src folder
+* Copy the resulting `build` folder to the themes folder of target site using scp (or ftp)
+* Once copied, rename the build folder on the target site server to match the theme name
+* If using a cache plugin, may need to clear cache
+
+
+-----------------------------------
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
