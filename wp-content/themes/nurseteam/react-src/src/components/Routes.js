@@ -8,6 +8,7 @@ import BlogArchive from '../templates/BlogArchive';
 import BlogSingle from '../templates/BlogSingle';
 import Contact from '../templates/Contact';
 import JobArchive from '../templates/JobArchive';
+import ApplicantDetail from '../templates/ApplicantDetail';
 import FourOhFour from '../templates/404';
 
 const Routes = ({ location }) => (
@@ -22,6 +23,7 @@ const Routes = ({ location }) => (
     <Route path="/articles" key="blog_archive_route" component={BlogArchive} />
     <Route path="/contact" key="contact_route" component={Contact} />
     <Route path="/jobs" key="job_archive_route" component={JobArchive} />
+    <Route path="/applicantdetail" key="applicant_detail_route" component={ApplicantDetail} />
     <Route exact path="/" key="home" component={Home} />
     <Route key="404_route" component={FourOhFour} />
   </Switch>
