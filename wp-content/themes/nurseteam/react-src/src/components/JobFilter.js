@@ -95,7 +95,7 @@ const specialtyOptions = Specialties.map(sp => ({
   label: sp.name,
 }));
 // Lazy sorting -- only works if all specialties start with capital letter
-specialtyOptions.sort((a, b) => a.name < b.name);
+specialtyOptions.sort((a, b) => a.value > b.value);
 specialtyOptions.unshift({
   value: 'ALL',
   label: 'All Specialties',
